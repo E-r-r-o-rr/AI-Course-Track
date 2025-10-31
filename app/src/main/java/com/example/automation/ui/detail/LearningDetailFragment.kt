@@ -1,5 +1,6 @@
 package com.example.automation.ui.detail
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -22,8 +23,14 @@ import com.example.automation.ui.LearningDetailViewModel
 class LearningDetailFragment : Fragment() {
     private var _binding: FragmentLearningDetailBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: LearningDetailViewModel by viewModels { AppViewModelFactory(requireActivity().application) }
+    private lateinit var viewModelFactory: AppViewModelFactory
+    private val viewModel: LearningDetailViewModel by viewModels { viewModelFactory }
     private var itemId: Long = 0
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModelFactory = AppViewModelFactory(requireActivity().application)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLearningDetailBinding.inflate(inflater, container, false)

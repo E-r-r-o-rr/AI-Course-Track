@@ -1,5 +1,6 @@
 package com.example.automation.ui.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -19,8 +20,14 @@ import com.example.automation.ui.LearningListViewModel
 class LearningListFragment : Fragment() {
     private var _binding: FragmentLearningListBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: LearningListViewModel by viewModels { AppViewModelFactory(requireActivity().application) }
+    private lateinit var viewModelFactory: AppViewModelFactory
+    private val viewModel: LearningListViewModel by viewModels { viewModelFactory }
     private lateinit var adapter: LearningListAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModelFactory = AppViewModelFactory(requireActivity().application)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLearningListBinding.inflate(inflater, container, false)

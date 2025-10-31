@@ -1,5 +1,6 @@
 package com.example.automation.ui.dashboard
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +17,14 @@ import com.example.automation.ui.DashboardViewModel
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: DashboardViewModel by viewModels { AppViewModelFactory(requireActivity().application) }
+    private lateinit var viewModelFactory: AppViewModelFactory
+    private val viewModel: DashboardViewModel by viewModels { viewModelFactory }
     private lateinit var adapter: NextUpAdapter
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModelFactory = AppViewModelFactory(requireActivity().application)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentDashboardBinding.inflate(inflater, container, false)
@@ -35,6 +42,7 @@ class DashboardFragment : Fragment() {
         }
         binding.nextUpList.layoutManager = LinearLayoutManager(requireContext())
         binding.nextUpList.adapter = adapter
+        binding.nextUpList.isNestedScrollingEnabled = false
 
         viewModel.summary.observe(viewLifecycleOwner) { summary ->
             binding.totalCount.text = summary.total.toString()

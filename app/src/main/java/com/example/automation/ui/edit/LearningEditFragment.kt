@@ -1,5 +1,6 @@
 package com.example.automation.ui.edit
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,9 +21,15 @@ import kotlinx.coroutines.launch
 class LearningEditFragment : Fragment() {
     private var _binding: FragmentLearningEditBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: LearningEditViewModel by viewModels { AppViewModelFactory(requireActivity().application) }
+    private lateinit var viewModelFactory: AppViewModelFactory
+    private val viewModel: LearningEditViewModel by viewModels { viewModelFactory }
 
     private var currentItem: LearningItem? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModelFactory = AppViewModelFactory(requireActivity().application)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLearningEditBinding.inflate(inflater, container, false)
