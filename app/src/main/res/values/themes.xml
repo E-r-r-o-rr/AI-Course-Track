@@ -16,5 +16,6 @@
         <item name="materialCardViewStyle">@style/Horizon.Card</item>
         <item name="materialButtonStyle">@style/Horizon.Button.Primary</item>
         <item name="toolbarStyle">@style/Horizon.Toolbar</item>
+        <item name="android:windowBackground">@drawable/bg_app_background</item>
     </style>
 </resources>

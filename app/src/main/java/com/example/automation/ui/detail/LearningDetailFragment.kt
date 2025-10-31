@@ -55,11 +55,12 @@ class LearningDetailFragment : Fragment() {
             }
         }
 
-        binding.statusRadio.setOnCheckedChangeListener { _, checkedId ->
+        binding.statusToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
+            if (!isChecked) return@addOnButtonCheckedListener
             val status = when (checkedId) {
-                R.id.radioTodo -> LearningStatus.TODO
-                R.id.radioDoing -> LearningStatus.IN_PROGRESS
-                R.id.radioDone -> LearningStatus.DONE
+                R.id.buttonTodo -> LearningStatus.TODO
+                R.id.buttonDoing -> LearningStatus.IN_PROGRESS
+                R.id.buttonDone -> LearningStatus.DONE
                 else -> null
             }
             val current = viewModel.item.value?.status
@@ -91,11 +92,11 @@ class LearningDetailFragment : Fragment() {
             }
             binding.toolbar.title = item.title
             binding.source.text = getString(R.string.detail_source_format, item.source)
-            binding.statusRadio.check(
+            binding.statusToggle.check(
                 when (item.status) {
-                    LearningStatus.TODO -> R.id.radioTodo
-                    LearningStatus.IN_PROGRESS -> R.id.radioDoing
-                    LearningStatus.DONE -> R.id.radioDone
+                    LearningStatus.TODO -> R.id.buttonTodo
+                    LearningStatus.IN_PROGRESS -> R.id.buttonDoing
+                    LearningStatus.DONE -> R.id.buttonDone
                 }
             )
             if (binding.notesEdit.text.toString() != item.note) {

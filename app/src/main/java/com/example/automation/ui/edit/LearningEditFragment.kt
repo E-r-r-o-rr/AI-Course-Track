@@ -50,10 +50,10 @@ class LearningEditFragment : Fragment() {
                 .split(",")
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
-            val status = when (binding.statusChipGroup.checkedChipId) {
-                R.id.chipStatusTodo -> LearningStatus.TODO
-                R.id.chipStatusDoing -> LearningStatus.IN_PROGRESS
-                R.id.chipStatusDone -> LearningStatus.DONE
+            val status = when (binding.statusToggle.checkedButtonId) {
+                R.id.buttonStatusTodo -> LearningStatus.TODO
+                R.id.buttonStatusDoing -> LearningStatus.IN_PROGRESS
+                R.id.buttonStatusDone -> LearningStatus.DONE
                 else -> LearningStatus.TODO
             }
 
@@ -101,11 +101,11 @@ class LearningEditFragment : Fragment() {
         binding.urlInput.editText?.setText(item.url)
         binding.sourceInput.editText?.setText(item.source)
         binding.tagsInput.editText?.setText(item.tags.joinToString(", "))
-        binding.statusChipGroup.check(
+        binding.statusToggle.check(
             when (item.status) {
-                LearningStatus.TODO -> R.id.chipStatusTodo
-                LearningStatus.IN_PROGRESS -> R.id.chipStatusDoing
-                LearningStatus.DONE -> R.id.chipStatusDone
+                LearningStatus.TODO -> R.id.buttonStatusTodo
+                LearningStatus.IN_PROGRESS -> R.id.buttonStatusDoing
+                LearningStatus.DONE -> R.id.buttonStatusDone
             }
         )
     }

@@ -23,6 +23,15 @@
     <color name="green_primary">#01B574</color>
     <color name="brand_linear">#868CFF</color>
 
+    <!-- Glassmorphism palette -->
+    <color name="brand_gradient_start">#E9EEFF</color>
+    <color name="brand_gradient_end">#D6E2FF</color>
+    <color name="glass_surface">#CCFFFFFF</color>
+    <color name="glass_surface_alt">#B3FFFFFF</color>
+    <color name="glass_highlight">#40FFFFFF</color>
+    <color name="glass_stroke">#66FFFFFF</color>
+    <color name="glass_toolbar_tint">#F2F5FF</color>
+
     <!-- Shadows / misc -->
     <color name="shadow_500">#147090B0</color> <!-- 0x14 alpha -->
     <color name="white">#FFFFFF</color>

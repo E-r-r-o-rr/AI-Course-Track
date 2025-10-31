@@ -26,9 +26,13 @@
     <string name="save">Save</string>
     <string name="validation_error">Fill out title, link, and source</string>
     <string name="dashboard_title">Dashboard</string>
+    <string name="dashboard_subtitle">Keep momentum going.</string>
+    <string name="summary_heading">Progress overview</string>
     <string name="summary_total">Saved</string>
     <string name="summary_in_progress">In progress</string>
     <string name="summary_done">Done</string>
+    <string name="library_subtitle">Organise your saved lessons with quick filters.</string>
+    <string name="library_filters_title">Quick filters</string>
     <string name="next_up">What\'s next</string>
     <string name="empty_next_up">Everything is completed. Time to add something new!</string>
     <string name="go_to_library">View library</string>
@@ -38,4 +42,5 @@
     <string name="notification_body">Open your learning queue and choose one item to finish.</string>
     <string name="notification_channel_name">Learning reminders</string>
     <string name="no_browser">No app found to open this link.</string>
+    <string name="notes_label">Notes</string>
 </resources>
