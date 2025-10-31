@@ -1,0 +1,39 @@
+<resources>
+    <!-- Brand -->
+    <color name="brand_400">#7551FF</color>
+    <color name="brand_500">#422AFB</color>
+    <color name="brand_600">#3311DB</color>
+
+    <!-- Neutrals -->
+    <color name="gray_50">#F5F6FA</color>
+    <color name="gray_600">#A3AED0</color>
+    <color name="gray_700">#707EAE</color>
+    <color name="gray_900">#1B2559</color>
+
+    <!-- Navy surfaces -->
+    <color name="navy_700">#1B254B</color>
+    <color name="navy_800">#111C44</color>
+    <color name="navy_900">#0B1437</color>
+
+    <!-- Extras -->
+    <color name="light_primary">#F4F7FE</color>
+    <color name="dark_primary">#B0BBD5</color>
+    <color name="blue_primary">#2B3674</color>
+    <color name="blue_secondary">#4318FF</color>
+    <color name="green_primary">#01B574</color>
+    <color name="brand_linear">#868CFF</color>
+
+    <!-- Shadows / misc -->
+    <color name="shadow_500">#147090B0</color> <!-- 0x14 alpha -->
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Material 3 mapping (light) -->
+    <color name="md_sys_color_primary">@color/brand_500</color>
+    <color name="md_sys_color_onPrimary">@color/white</color>
+    <color name="md_sys_color_background">@color/light_primary</color>
+    <color name="md_sys_color_onBackground">@color/gray_900</color>
+    <color name="md_sys_color_surface">@color/white</color>
+    <color name="md_sys_color_onSurface">@color/gray_900</color>
+    <color name="md_sys_color_outline">@color/gray_600</color>
+</resources>

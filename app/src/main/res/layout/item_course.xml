@@ -1,0 +1,90 @@
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Horizon.Card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Left icon/avatar -->
+        <ImageView
+            android:id="@+id/imgProvider"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_school_24"
+            app:tint="@color/brand_500"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/txtTitle"
+            style="@style/TextAppearance.Material3.TitleMedium"
+            android:textColor="@color/blue_primary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/imgProvider"
+            app:layout_constraintTop_toTopOf="@id/imgProvider"
+            app:layout_constraintEnd_toStartOf="@id/progress"
+            android:layout_marginStart="12dp"
+            android:text="LLM Agent Systems"/>
+
+        <!-- Subtitle/provider -->
+        <TextView
+            android:id="@+id/txtProvider"
+            style="@style/TextAppearance.Material3.BodyMedium"
+            android:textColor="@color/gray_700"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/txtTitle"
+            app:layout_constraintTop_toBottomOf="@id/txtTitle"
+            app:layout_constraintEnd_toEndOf="@id/txtTitle"
+            android:text="DeepLearning.AI • 6 lessons" />
+
+        <!-- Right circular progress -->
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/progress"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminate="false"
+            android:progress="60"
+            android:max="100"
+            app:trackThickness="6dp"
+            app:indicatorSize="48dp"
+            app:indicatorDirectionCircular="clockwise"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:showAnimationBehavior="inward"
+            app:indicatorInset="0dp"
+            app:trackColor="@color/gray_50"
+            app:indicatorColor="@color/brand_500" />
+
+
+        <!-- Chip row -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chips"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/txtTitle"
+            app:layout_constraintTop_toBottomOf="@id/txtProvider"
+            app:layout_constraintEnd_toStartOf="@id/progress"
+            android:layout_marginTop="8dp"
+            app:singleLine="true" />
+
+        <!-- CTA -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOpen"
+            style="@style/Horizon.Button.Primary"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="Open"
+            app:layout_constraintStart_toStartOf="@id/txtTitle"
+            app:layout_constraintTop_toBottomOf="@id/chips"
+            android:layout_marginTop="12dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

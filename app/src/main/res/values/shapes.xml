@@ -1,0 +1,7 @@
+<resources>
+    <!-- Rounded radii like Horizon cards -->
+    <dimen name="radius_sm">10dp</dimen>
+    <dimen name="radius_md">12dp</dimen>
+    <dimen name="radius_lg">16dp</dimen>
+    <dimen name="radius_xl">20dp</dimen>
+</resources>
