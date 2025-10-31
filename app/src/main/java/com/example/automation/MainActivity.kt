@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
         onBackPressedDispatcher.addCallback(this) {
             when (controller.currentDestination?.id) {
                 R.id.learningListFragment -> {
-                    val popped = controller.popBackStack()
-                    if (!popped) {
+                    val returnedToDashboard = controller.popBackStack(R.id.dashboardFragment, false)
+                    if (!returnedToDashboard) {
                         binding.bottomNav.selectedItemId = R.id.dashboardFragment
                     }
                 }
