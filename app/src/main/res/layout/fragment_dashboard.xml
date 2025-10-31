@@ -1,134 +1,120 @@
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment">
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        style="@style/Widget.Material3.Toolbar"
+        style="@style/Widget.MaterialComponents.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:theme="@style/ThemeOverlay.Material3.Dark.ActionBar"
-        app:title="Dashboard" />
+        android:elevation="0dp"
+        app:titleTextColor="@color/primaryText" />
 
-    <androidx.core.widget.NestedScrollView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
 
         <LinearLayout
-            android:orientation="vertical"
-            android:padding="16dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="space_between">
 
-            <!-- Stats row -->
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:weightSum="3"
-                android:baselineAligned="false">
+                android:orientation="vertical">
 
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp">
+                    android:text="@string/summary_total"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textColor="@color/secondaryText" />
 
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            style="@style/TextAppearance.Material3.BodyMedium"
-                            android:text="Total time"/>
-                        <TextView
-                            android:id="@+id/txtTotalTime"
-                            style="@style/TextAppearance.Material3.TitleLarge"
-                            android:text="0m"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
+                <TextView
+                    android:id="@+id/totalCount"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginHorizontal="8dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            style="@style/TextAppearance.Material3.BodyMedium"
-                            android:text="Sessions this week"/>
-                        <TextView
-                            android:id="@+id/txtSessionsWeek"
-                            style="@style/TextAppearance.Material3.TitleLarge"
-                            android:text="0"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
-
-                <com.google.android.material.card.MaterialCardView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="8dp">
-
-                    <LinearLayout
-                        android:orientation="vertical"
-                        android:padding="16dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-                        <TextView
-                            style="@style/TextAppearance.Material3.BodyMedium"
-                            android:text="Lessons done"/>
-                        <TextView
-                            android:id="@+id/txtLessonsDone"
-                            style="@style/TextAppearance.Material3.TitleLarge"
-                            android:text="0"/>
-                    </LinearLayout>
-                </com.google.android.material.card.MaterialCardView>
+                    android:textAppearance="@style/TextAppearance.Material3.DisplaySmall" />
             </LinearLayout>
 
-            <!-- Filters -->
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chipsFilter"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp">
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipOverdue"
-                    android:text="Overdue"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipDueSoon"
-                    android:text="Due soon"/>
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chipDoing"
-                    android:text="Doing"/>
-            </com.google.android.material.chip.ChipGroup>
+                android:orientation="vertical">
 
-            <!-- Next up list -->
-            <TextView
-                style="@style/TextAppearance.Material3.TitleMedium"
-                android:text="Next up"
-                android:layout_marginTop="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/summary_in_progress"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textColor="@color/secondaryText" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvNextUp"
-                android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/progressCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingTop="8dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/summary_done"
+                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                    android:textColor="@color/secondaryText" />
+
+                <TextView
+                    android:id="@+id/doneCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge" />
+            </LinearLayout>
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/next_up"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/nextUpList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/emptyNextUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/empty_next_up"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:visibility="gone" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/openLibrary"
+        style="@style/Widget.Material3.Button.FilledButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/go_to_library" />
+
+</LinearLayout>
