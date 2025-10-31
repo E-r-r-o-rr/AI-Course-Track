@@ -12,7 +12,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            style="@style/Widget.MaterialComponents.Toolbar"
+            style="@style/Horizon.Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_arrow_back_24"
@@ -21,7 +21,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/titleInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -35,7 +35,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/urlInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -49,7 +49,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/sourceInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -63,7 +63,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tagsInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -91,24 +91,24 @@
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipStatusTodo"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Horizon.Chip.Filter"
                 android:checked="true"
                 android:text="@string/status_todo" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipStatusDoing"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Horizon.Chip.Filter"
                 android:text="@string/status_in_progress" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chipStatusDone"
-                style="@style/Widget.MaterialComponents.Chip.Filter"
+                style="@style/Horizon.Chip.Filter"
                 android:text="@string/status_done" />
         </com.google.android.material.chip.ChipGroup>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/saveButton"
-            style="@style/Widget.Material3.Button.FilledButton"
+            style="?attr/materialButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"

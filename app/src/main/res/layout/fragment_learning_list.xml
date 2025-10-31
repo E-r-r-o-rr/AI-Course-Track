@@ -8,7 +8,7 @@
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
-        style="@style/Widget.MaterialComponents.Toolbar"
+        style="@style/Horizon.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="0dp"
@@ -24,23 +24,23 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipAll"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
+            style="@style/Horizon.Chip.Filter"
             android:checked="true"
             android:text="@string/status_all" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipTodo"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
+            style="@style/Horizon.Chip.Filter"
             android:text="@string/status_todo" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipDoing"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
+            style="@style/Horizon.Chip.Filter"
             android:text="@string/status_in_progress" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipDone"
-            style="@style/Widget.MaterialComponents.Chip.Filter"
+            style="@style/Horizon.Chip.Filter"
             android:text="@string/status_done" />
     </com.google.android.material.chip.ChipGroup>
 

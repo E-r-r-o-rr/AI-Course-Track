@@ -26,4 +26,10 @@
         <item name="chipCornerRadius">@dimen/radius_md</item>
         <item name="android:textColor">@color/gray_700</item>
     </style>
+
+    <style name="Horizon.Chip.Assist" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/avatarPurple</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
 </resources>
