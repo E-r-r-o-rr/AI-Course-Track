@@ -63,22 +63,30 @@
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipAll"
                     style="@style/Horizon.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="@string/status_all" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipTodo"
                     style="@style/Horizon.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/status_todo" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipDoing"
                     style="@style/Horizon.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/status_in_progress" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/chipDone"
                     style="@style/Horizon.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:text="@string/status_done" />
             </com.google.android.material.chip.ChipGroup>
 
