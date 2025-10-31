@@ -82,7 +82,7 @@
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
-            android:src="@drawable/ic_list_24"
+            android:src="@drawable/ic_school_24"
             android:tint="@color/avatarPurple" />
 
         <TextView
