@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -47,6 +48,19 @@ class MainActivity : AppCompatActivity() {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         val controller = navHost.navController
         binding.bottomNav.setupWithNavController(controller)
+
+        onBackPressedDispatcher.addCallback(this) {
+            when (controller.currentDestination?.id) {
+                R.id.learningListFragment -> {
+                    binding.bottomNav.selectedItemId = R.id.dashboardFragment
+                }
+                else -> {
+                    if (!controller.popBackStack()) {
+                        finish()
+                    }
+                }
+            }
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             val granted = ContextCompat.checkSelfPermission(
