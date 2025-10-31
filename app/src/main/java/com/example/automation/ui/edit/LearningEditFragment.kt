@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.automation.R
@@ -16,6 +17,8 @@ import com.example.automation.model.LearningItem
 import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningEditViewModel
+import com.example.automation.ui.ThemeViewModel
+import com.example.automation.ui.theme.updateThemeMenuItem
 import kotlinx.coroutines.launch
 
 class LearningEditFragment : Fragment() {
@@ -23,12 +26,14 @@ class LearningEditFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var viewModelFactory: AppViewModelFactory
     private val viewModel: LearningEditViewModel by viewModels { viewModelFactory }
+    private lateinit var themeViewModel: ThemeViewModel
 
     private var currentItem: LearningItem? = null
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModelFactory = AppViewModelFactory(requireActivity().application)
+        themeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[ThemeViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -39,6 +44,22 @@ class LearningEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val itemId = requireArguments().getLong("itemId")
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
+        binding.toolbar.inflateMenu(R.menu.menu_theme_only)
+        binding.toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_toggle_theme -> {
+                    themeViewModel.toggleNightMode()
+                    true
+                }
+
+                else -> false
+            }
+        }
+
+        val themeItem = binding.toolbar.menu.findItem(R.id.action_toggle_theme)
+        themeViewModel.themeMode.observe(viewLifecycleOwner) { mode ->
+            updateThemeMenuItem(requireContext(), themeItem, mode)
+        }
 
         if (itemId != 0L) {
             viewLifecycleOwner.lifecycleScope.launch {

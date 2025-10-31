@@ -13,23 +13,28 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.automation.R
 import com.example.automation.databinding.FragmentLearningDetailBinding
 import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningDetailViewModel
+import com.example.automation.ui.ThemeViewModel
+import com.example.automation.ui.theme.updateThemeMenuItem
 
 class LearningDetailFragment : Fragment() {
     private var _binding: FragmentLearningDetailBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModelFactory: AppViewModelFactory
     private val viewModel: LearningDetailViewModel by viewModels { viewModelFactory }
+    private lateinit var themeViewModel: ThemeViewModel
     private var itemId: Long = 0
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModelFactory = AppViewModelFactory(requireActivity().application)
+        themeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[ThemeViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -58,8 +63,18 @@ class LearningDetailFragment : Fragment() {
                     true
                 }
 
+                R.id.action_toggle_theme -> {
+                    themeViewModel.toggleNightMode()
+                    true
+                }
+
                 else -> false
             }
+        }
+
+        val themeItem = binding.toolbar.menu.findItem(R.id.action_toggle_theme)
+        themeViewModel.themeMode.observe(viewLifecycleOwner) { mode ->
+            updateThemeMenuItem(requireContext(), themeItem, mode)
         }
 
         binding.statusToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->

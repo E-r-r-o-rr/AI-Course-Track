@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.automation.R
@@ -16,17 +17,21 @@ import com.example.automation.model.LearningItem
 import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningListViewModel
+import com.example.automation.ui.ThemeViewModel
+import com.example.automation.ui.theme.updateThemeMenuItem
 
 class LearningListFragment : Fragment() {
     private var _binding: FragmentLearningListBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModelFactory: AppViewModelFactory
     private val viewModel: LearningListViewModel by viewModels { viewModelFactory }
+    private lateinit var themeViewModel: ThemeViewModel
     private lateinit var adapter: LearningListAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         viewModelFactory = AppViewModelFactory(requireActivity().application)
+        themeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[ThemeViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -47,8 +52,18 @@ class LearningListFragment : Fragment() {
                     true
                 }
 
+                R.id.action_toggle_theme -> {
+                    themeViewModel.toggleNightMode()
+                    true
+                }
+
                 else -> false
             }
+        }
+
+        val themeItem = binding.toolbar.menu.findItem(R.id.action_toggle_theme)
+        themeViewModel.themeMode.observe(viewLifecycleOwner) { mode ->
+            updateThemeMenuItem(requireContext(), themeItem, mode)
         }
 
         adapter = LearningListAdapter(

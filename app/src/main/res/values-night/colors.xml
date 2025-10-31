@@ -23,4 +23,8 @@
     <color name="glass_highlight">#33111C44</color>
     <color name="glass_stroke">#661B2559</color>
     <color name="glass_toolbar_tint">#80202F5E</color>
+    <color name="toolbar_gradient_start">#CC1B254B</color>
+    <color name="toolbar_gradient_end">#CC111C44</color>
+    <color name="button_gradient_start">#6C7BFF</color>
+    <color name="button_gradient_end">#4F5FFF</color>
 </resources>

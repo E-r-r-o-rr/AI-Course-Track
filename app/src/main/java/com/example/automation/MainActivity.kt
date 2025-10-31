@@ -1,18 +1,24 @@
 package com.example.automation
 
 import android.Manifest
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.automation.databinding.ActivityMainBinding
 import com.example.automation.data.work.ReminderWorker
+import com.example.automation.databinding.ActivityMainBinding
+import com.example.automation.ui.AppViewModelFactory
+import com.example.automation.ui.ThemeViewModel
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -23,9 +29,18 @@ class MainActivity : AppCompatActivity() {
                 scheduleDailyReminder()
             }
         }
+    private val themeViewModel: ThemeViewModel by viewModels { AppViewModelFactory(application) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        themeViewModel.themeMode.observe(this) { mode ->
+            if (AppCompatDelegate.getDefaultNightMode() != mode) {
+                AppCompatDelegate.setDefaultNightMode(mode)
+            }
+            updateSystemBars(mode)
+        }
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -66,5 +81,16 @@ class MainActivity : AppCompatActivity() {
             .build()
         WorkManager.getInstance(this)
             .enqueueUniquePeriodicWork("dailyReminder", ExistingPeriodicWorkPolicy.UPDATE, work)
+    }
+
+    private fun updateSystemBars(mode: Int) {
+        val isDark = when (mode) {
+            AppCompatDelegate.MODE_NIGHT_YES -> true
+            AppCompatDelegate.MODE_NIGHT_NO -> false
+            else -> (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+        }
+        val controller = WindowInsetsControllerCompat(window, window.decorView)
+        controller.isAppearanceLightStatusBars = !isDark
+        controller.isAppearanceLightNavigationBars = !isDark
     }
 }

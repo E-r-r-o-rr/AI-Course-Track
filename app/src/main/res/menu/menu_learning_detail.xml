@@ -11,4 +11,9 @@
         android:icon="@drawable/ic_delete_24"
         android:title="@string/delete_item"
         app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/action_toggle_theme"
+        android:icon="@drawable/ic_dark_mode_24"
+        android:title="@string/action_toggle_theme"
+        app:showAsAction="ifRoom" />
 </menu>

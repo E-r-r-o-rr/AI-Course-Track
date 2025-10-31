@@ -32,6 +32,11 @@
     <color name="glass_stroke">#66FFFFFF</color>
     <color name="glass_toolbar_tint">#F2F5FF</color>
 
+    <color name="toolbar_gradient_start">#CC422AFB</color>
+    <color name="toolbar_gradient_end">#CC7551FF</color>
+    <color name="button_gradient_start">@color/brand_linear</color>
+    <color name="button_gradient_end">@color/blue_secondary</color>
+
     <!-- Shadows / misc -->
     <color name="shadow_500">#147090B0</color> <!-- 0x14 alpha -->
     <color name="white">#FFFFFF</color>
