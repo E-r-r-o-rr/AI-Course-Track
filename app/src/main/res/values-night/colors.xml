@@ -6,4 +6,13 @@
     <color name="md_sys_color_surface">@color/navy_800</color>
     <color name="md_sys_color_onSurface">@color/dark_primary</color>
     <color name="md_sys_color_outline">@color/gray_700</color>
+    <color name="primaryText">@color/dark_primary</color>
+    <color name="secondaryText">@color/gray_600</color>
+    <color name="statusTodo">#748FFC</color>
+    <color name="statusDoing">#FFB347</color>
+    <color name="statusDone">#69DB7C</color>
+    <color name="avatarBlue">#748FFC</color>
+    <color name="avatarGreen">#69DB7C</color>
+    <color name="avatarPurple">#B197FC</color>
+    <color name="avatarOrange">#FFB347</color>
 </resources>
