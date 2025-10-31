@@ -1,5 +1,5 @@
 <resources>
-    <style name="Theme.PromptPath" parent="Theme.Material3.Light.NoActionBar">
+    <style name="Theme.AICourseTracker" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/md_sys_color_primary</item>
         <item name="colorOnPrimary">@color/md_sys_color_onPrimary</item>
         <item name="android:colorBackground">@color/md_sys_color_background</item>
@@ -7,15 +7,14 @@
         <item name="colorOnSurface">@color/md_sys_color_onSurface</item>
         <item name="colorOutline">@color/md_sys_color_outline</item>
 
-
         <item name="textAppearanceBodyLarge">@style/TextAppearance.Material3.BodyLarge</item>
         <item name="textAppearanceBodyMedium">@style/TextAppearance.Material3.BodyMedium</item>
         <item name="textAppearanceTitleLarge">@style/TextAppearance.Material3.TitleLarge</item>
         <item name="textAppearanceTitleMedium">@style/TextAppearance.Material3.TitleMedium</item>
         <item name="textAppearanceLabelLarge">@style/TextAppearance.Material3.LabelLarge</item>
 
-        <item name="materialCardViewStyle">@style/Horizon.Card</item> -->
-         <item name="materialButtonStyle">@style/Horizon.Button.Primary</item> -->
-         <item name="toolbarStyle">@style/Horizon.Toolbar</item> -->
+        <item name="materialCardViewStyle">@style/Horizon.Card</item>
+        <item name="materialButtonStyle">@style/Horizon.Button.Primary</item>
+        <item name="toolbarStyle">@style/Horizon.Toolbar</item>
     </style>
 </resources>
