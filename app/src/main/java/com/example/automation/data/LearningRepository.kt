@@ -30,7 +30,21 @@ class LearningRepository private constructor(context: Context) {
         LearningSummary(total = total, done = done, inProgress = inProgress)
     }
 
-    fun observeNextUp(): Flow<List<LearningItem>> = dao.observeNextUp(LearningStatus.DONE)
+    fun observeCurrentTasks(): Flow<List<LearningItem>> =
+        dao.observeByStatus(LearningStatus.IN_PROGRESS)
+
+    fun observeQueuedItems(): Flow<List<LearningItem>> =
+        dao.observeByStatus(LearningStatus.TODO)
+
+    suspend fun queueItem(id: Long) {
+        val current = dao.findById(id) ?: return
+        dao.update(
+            current.copy(
+                status = LearningStatus.TODO,
+                completedAt = null
+            )
+        )
+    }
 
     suspend fun insert(item: LearningItem) {
         dao.insert(item)
