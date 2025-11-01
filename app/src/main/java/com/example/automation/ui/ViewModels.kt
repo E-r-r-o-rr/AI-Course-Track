@@ -1,32 +1,27 @@
 package com.example.automation.ui
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.automation.data.LearningRepository
-import com.example.automation.data.preferences.ThemePreferences
 import com.example.automation.model.LearningItem
 import com.example.automation.model.LearningStatus
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class AppViewModelFactory(private val app: Application) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val repository = LearningRepository.getInstance(app)
-        val themePreferences = ThemePreferences.getInstance(app)
         @Suppress("UNCHECKED_CAST")
         return when (modelClass) {
             LearningListViewModel::class.java -> LearningListViewModel(repository)
             LearningDetailViewModel::class.java -> LearningDetailViewModel(repository)
             LearningEditViewModel::class.java -> LearningEditViewModel(repository)
             DashboardViewModel::class.java -> DashboardViewModel(repository)
-            ThemeViewModel::class.java -> ThemeViewModel(themePreferences)
             else -> throw IllegalArgumentException("Unknown ViewModel ${modelClass.name}")
         } as T
     }
@@ -113,24 +108,4 @@ class LearningEditViewModel(private val repository: LearningRepository) : ViewMo
 class DashboardViewModel(private val repository: LearningRepository) : ViewModel() {
     val summary = repository.observeSummary().asLiveData()
     val nextUp = repository.observeNextUp().asLiveData()
-}
-
-class ThemeViewModel(private val preferences: ThemePreferences) : ViewModel() {
-    val themeMode = preferences.themeMode.asLiveData()
-
-    fun toggleNightMode() {
-        viewModelScope.launch {
-            val current = preferences.themeMode.first()
-            val next = when (current) {
-                AppCompatDelegate.MODE_NIGHT_YES -> AppCompatDelegate.MODE_NIGHT_NO
-                AppCompatDelegate.MODE_NIGHT_NO -> AppCompatDelegate.MODE_NIGHT_YES
-                else -> AppCompatDelegate.MODE_NIGHT_YES
-            }
-            preferences.setThemeMode(next)
-        }
-    }
-
-    fun setMode(mode: Int) {
-        viewModelScope.launch { preferences.setThemeMode(mode) }
-    }
 }

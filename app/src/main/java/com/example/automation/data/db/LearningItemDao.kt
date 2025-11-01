@@ -34,5 +34,4 @@ interface LearningItemDao {
 
     @Query("SELECT * FROM learning_items WHERE status != :status ORDER BY addedAt ASC LIMIT 5")
     fun observeNextUp(status: LearningStatus): Flow<List<LearningItem>>
-
 }

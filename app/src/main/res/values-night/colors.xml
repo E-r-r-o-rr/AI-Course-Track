@@ -15,23 +15,4 @@
     <color name="avatarGreen">#69DB7C</color>
     <color name="avatarPurple">#B197FC</color>
     <color name="avatarOrange">#FFB347</color>
-
-    <color name="categoryCourse">#748FFC</color>
-    <color name="categoryVideo">#FF8787</color>
-    <color name="categoryBook">#63E6BE</color>
-    <color name="categoryPodcast">#B197FC</color>
-
-    <color name="brand_gradient_start">#1F2A56</color>
-    <color name="brand_gradient_end">#0F1B3F</color>
-    <color name="glass_surface">#CC253975</color>
-    <color name="glass_surface_alt">#99203369</color>
-    <color name="glass_highlight">#802F448B</color>
-    <color name="glass_stroke">#D34257A4</color>
-    <color name="glass_chip_surface">#6632488E</color>
-    <color name="glass_chip_stroke">#994E64C4</color>
-    <color name="glass_toolbar_tint">#992B3F82</color>
-    <color name="toolbar_gradient_start">#CC1B254B</color>
-    <color name="toolbar_gradient_end">#CC111C44</color>
-    <color name="button_gradient_start">#6C7BFF</color>
-    <color name="button_gradient_end">#4F5FFF</color>
 </resources>

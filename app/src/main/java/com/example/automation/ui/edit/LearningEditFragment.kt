@@ -1,6 +1,5 @@
 package com.example.automation.ui.edit
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,34 +7,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.automation.R
 import com.example.automation.databinding.FragmentLearningEditBinding
-import com.example.automation.model.LearningCategory
 import com.example.automation.model.LearningItem
 import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningEditViewModel
-import com.example.automation.ui.ThemeViewModel
-import com.example.automation.ui.theme.updateThemeMenuItem
 import kotlinx.coroutines.launch
 
 class LearningEditFragment : Fragment() {
     private var _binding: FragmentLearningEditBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModelFactory: AppViewModelFactory
-    private val viewModel: LearningEditViewModel by viewModels { viewModelFactory }
-    private lateinit var themeViewModel: ThemeViewModel
+    private val viewModel: LearningEditViewModel by viewModels { AppViewModelFactory(requireActivity().application) }
 
     private var currentItem: LearningItem? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModelFactory = AppViewModelFactory(requireActivity().application)
-        themeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[ThemeViewModel::class.java]
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLearningEditBinding.inflate(inflater, container, false)
@@ -45,22 +32,6 @@ class LearningEditFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val itemId = requireArguments().getLong("itemId")
         binding.toolbar.setNavigationOnClickListener { findNavController().navigateUp() }
-        binding.toolbar.inflateMenu(R.menu.menu_theme_only)
-        binding.toolbar.setOnMenuItemClickListener { item ->
-            when (item.itemId) {
-                R.id.action_toggle_theme -> {
-                    themeViewModel.toggleNightMode()
-                    true
-                }
-
-                else -> false
-            }
-        }
-
-        val themeItem = binding.toolbar.menu.findItem(R.id.action_toggle_theme)
-        themeViewModel.themeMode.observe(viewLifecycleOwner) { mode ->
-            updateThemeMenuItem(requireContext(), themeItem, mode)
-        }
 
         if (itemId != 0L) {
             viewLifecycleOwner.lifecycleScope.launch {
@@ -79,17 +50,10 @@ class LearningEditFragment : Fragment() {
                 .split(",")
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
-            val category = when (binding.categoryToggle.checkedButtonId) {
-                R.id.buttonCategoryCourse -> LearningCategory.COURSE
-                R.id.buttonCategoryVideo -> LearningCategory.VIDEO
-                R.id.buttonCategoryBook -> LearningCategory.BOOK
-                R.id.buttonCategoryPodcast -> LearningCategory.PODCAST
-                else -> LearningCategory.COURSE
-            }
-            val status = when (binding.statusToggle.checkedButtonId) {
-                R.id.buttonStatusTodo -> LearningStatus.TODO
-                R.id.buttonStatusDoing -> LearningStatus.IN_PROGRESS
-                R.id.buttonStatusDone -> LearningStatus.DONE
+            val status = when (binding.statusChipGroup.checkedChipId) {
+                R.id.chipStatusTodo -> LearningStatus.TODO
+                R.id.chipStatusDoing -> LearningStatus.IN_PROGRESS
+                R.id.chipStatusDone -> LearningStatus.DONE
                 else -> LearningStatus.TODO
             }
 
@@ -104,7 +68,6 @@ class LearningEditFragment : Fragment() {
                     title = title,
                     url = url,
                     source = source,
-                    category = category,
                     tags = tags,
                     status = status,
                     note = "",
@@ -116,7 +79,6 @@ class LearningEditFragment : Fragment() {
                     title = title,
                     url = url,
                     source = source,
-                    category = category,
                     tags = tags,
                     status = status,
                     completedAt = if (status == LearningStatus.DONE) base.completedAt ?: System.currentTimeMillis() else null
@@ -139,19 +101,11 @@ class LearningEditFragment : Fragment() {
         binding.urlInput.editText?.setText(item.url)
         binding.sourceInput.editText?.setText(item.source)
         binding.tagsInput.editText?.setText(item.tags.joinToString(", "))
-        binding.categoryToggle.check(
-            when (item.category) {
-                LearningCategory.COURSE -> R.id.buttonCategoryCourse
-                LearningCategory.VIDEO -> R.id.buttonCategoryVideo
-                LearningCategory.BOOK -> R.id.buttonCategoryBook
-                LearningCategory.PODCAST -> R.id.buttonCategoryPodcast
-            }
-        )
-        binding.statusToggle.check(
+        binding.statusChipGroup.check(
             when (item.status) {
-                LearningStatus.TODO -> R.id.buttonStatusTodo
-                LearningStatus.IN_PROGRESS -> R.id.buttonStatusDoing
-                LearningStatus.DONE -> R.id.buttonStatusDone
+                LearningStatus.TODO -> R.id.chipStatusTodo
+                LearningStatus.IN_PROGRESS -> R.id.chipStatusDoing
+                LearningStatus.DONE -> R.id.chipStatusDone
             }
         )
     }

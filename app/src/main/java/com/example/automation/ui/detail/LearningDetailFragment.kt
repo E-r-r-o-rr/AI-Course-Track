@@ -1,6 +1,5 @@
 package com.example.automation.ui.detail
 
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -8,39 +7,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.content.res.ColorStateList
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.automation.R
 import com.example.automation.databinding.FragmentLearningDetailBinding
 import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningDetailViewModel
-import com.example.automation.ui.ThemeViewModel
-import com.example.automation.ui.theme.updateThemeMenuItem
-import com.example.automation.ui.category.iconRes
-import com.example.automation.ui.category.labelRes
-import com.example.automation.ui.category.tintRes
 
 class LearningDetailFragment : Fragment() {
     private var _binding: FragmentLearningDetailBinding? = null
     private val binding get() = _binding!!
-    private lateinit var viewModelFactory: AppViewModelFactory
-    private val viewModel: LearningDetailViewModel by viewModels { viewModelFactory }
-    private lateinit var themeViewModel: ThemeViewModel
+    private val viewModel: LearningDetailViewModel by viewModels { AppViewModelFactory(requireActivity().application) }
     private var itemId: Long = 0
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        viewModelFactory = AppViewModelFactory(requireActivity().application)
-        themeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[ThemeViewModel::class.java]
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentLearningDetailBinding.inflate(inflater, container, false)
@@ -68,26 +51,15 @@ class LearningDetailFragment : Fragment() {
                     true
                 }
 
-                R.id.action_toggle_theme -> {
-                    themeViewModel.toggleNightMode()
-                    true
-                }
-
                 else -> false
             }
         }
 
-        val themeItem = binding.toolbar.menu.findItem(R.id.action_toggle_theme)
-        themeViewModel.themeMode.observe(viewLifecycleOwner) { mode ->
-            updateThemeMenuItem(requireContext(), themeItem, mode)
-        }
-
-        binding.statusToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (!isChecked) return@addOnButtonCheckedListener
+        binding.statusRadio.setOnCheckedChangeListener { _, checkedId ->
             val status = when (checkedId) {
-                R.id.buttonTodo -> LearningStatus.TODO
-                R.id.buttonDoing -> LearningStatus.IN_PROGRESS
-                R.id.buttonDone -> LearningStatus.DONE
+                R.id.radioTodo -> LearningStatus.TODO
+                R.id.radioDoing -> LearningStatus.IN_PROGRESS
+                R.id.radioDone -> LearningStatus.DONE
                 else -> null
             }
             val current = viewModel.item.value?.status
@@ -118,24 +90,12 @@ class LearningDetailFragment : Fragment() {
                 return@observe
             }
             binding.toolbar.title = item.title
-            binding.categoryIcon.setImageResource(item.category.iconRes())
-            val tintColor = ContextCompat.getColor(requireContext(), item.category.tintRes())
-            binding.categoryIcon.backgroundTintList = ColorStateList.valueOf(tintColor)
-            binding.categoryIcon.imageTintList = ColorStateList.valueOf(
-                ContextCompat.getColor(requireContext(), android.R.color.white)
-            )
-            binding.categoryLabel.text = getString(item.category.labelRes())
-            binding.categoryIcon.contentDescription = getString(
-                R.string.category_icon_content_description,
-                binding.categoryLabel.text.toString()
-            )
             binding.source.text = getString(R.string.detail_source_format, item.source)
-            binding.source.isVisible = item.source.isNotBlank()
-            binding.statusToggle.check(
+            binding.statusRadio.check(
                 when (item.status) {
-                    LearningStatus.TODO -> R.id.buttonTodo
-                    LearningStatus.IN_PROGRESS -> R.id.buttonDoing
-                    LearningStatus.DONE -> R.id.buttonDone
+                    LearningStatus.TODO -> R.id.radioTodo
+                    LearningStatus.IN_PROGRESS -> R.id.radioDoing
+                    LearningStatus.DONE -> R.id.radioDone
                 }
             )
             if (binding.notesEdit.text.toString() != item.note) {
