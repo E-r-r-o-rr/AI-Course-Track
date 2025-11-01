@@ -13,6 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.automation.R
 import com.example.automation.databinding.FragmentLearningEditBinding
+import com.example.automation.model.LearningCategory
 import com.example.automation.model.LearningItem
 import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
@@ -78,6 +79,13 @@ class LearningEditFragment : Fragment() {
                 .split(",")
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
+            val category = when (binding.categoryToggle.checkedButtonId) {
+                R.id.buttonCategoryCourse -> LearningCategory.COURSE
+                R.id.buttonCategoryVideo -> LearningCategory.VIDEO
+                R.id.buttonCategoryBook -> LearningCategory.BOOK
+                R.id.buttonCategoryPodcast -> LearningCategory.PODCAST
+                else -> LearningCategory.COURSE
+            }
             val status = when (binding.statusToggle.checkedButtonId) {
                 R.id.buttonStatusTodo -> LearningStatus.TODO
                 R.id.buttonStatusDoing -> LearningStatus.IN_PROGRESS
@@ -96,6 +104,7 @@ class LearningEditFragment : Fragment() {
                     title = title,
                     url = url,
                     source = source,
+                    category = category,
                     tags = tags,
                     status = status,
                     note = "",
@@ -107,6 +116,7 @@ class LearningEditFragment : Fragment() {
                     title = title,
                     url = url,
                     source = source,
+                    category = category,
                     tags = tags,
                     status = status,
                     completedAt = if (status == LearningStatus.DONE) base.completedAt ?: System.currentTimeMillis() else null
@@ -129,6 +139,14 @@ class LearningEditFragment : Fragment() {
         binding.urlInput.editText?.setText(item.url)
         binding.sourceInput.editText?.setText(item.source)
         binding.tagsInput.editText?.setText(item.tags.joinToString(", "))
+        binding.categoryToggle.check(
+            when (item.category) {
+                LearningCategory.COURSE -> R.id.buttonCategoryCourse
+                LearningCategory.VIDEO -> R.id.buttonCategoryVideo
+                LearningCategory.BOOK -> R.id.buttonCategoryBook
+                LearningCategory.PODCAST -> R.id.buttonCategoryPodcast
+            }
+        )
         binding.statusToggle.check(
             when (item.status) {
                 LearningStatus.TODO -> R.id.buttonStatusTodo

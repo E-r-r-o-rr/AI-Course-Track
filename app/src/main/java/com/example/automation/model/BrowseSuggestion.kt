@@ -6,5 +6,6 @@ data class BrowseSuggestion(
     val url: String,
     val description: String,
     val tags: List<String>,
+    val category: LearningCategory,
     val duration: String? = null
 )

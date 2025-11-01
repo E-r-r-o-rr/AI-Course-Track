@@ -1,6 +1,7 @@
 package com.example.automation.data.db
 
 import androidx.room.TypeConverter
+import com.example.automation.model.LearningCategory
 import com.example.automation.model.LearningStatus
 
 class Converters {
@@ -16,4 +17,10 @@ class Converters {
 
     @TypeConverter
     fun fromStatus(status: LearningStatus): String = status.name
+
+    @TypeConverter
+    fun toCategory(value: String): LearningCategory = LearningCategory.valueOf(value)
+
+    @TypeConverter
+    fun fromCategory(category: LearningCategory): String = category.name
 }

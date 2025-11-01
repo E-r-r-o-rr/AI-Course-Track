@@ -1,12 +1,18 @@
 package com.example.automation.ui.dashboard
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.automation.databinding.ItemNextUpBinding
 import com.example.automation.model.LearningItem
+import com.example.automation.ui.category.iconRes
+import com.example.automation.ui.category.labelRes
+import com.example.automation.ui.category.tintRes
+import com.example.automation.R
 
 class NextUpAdapter(private val onClick: (LearningItem) -> Unit) :
     ListAdapter<LearningItem, NextUpAdapter.ViewHolder>(Diff) {
@@ -27,7 +33,27 @@ class NextUpAdapter(private val onClick: (LearningItem) -> Unit) :
         val item = getItem(position)
         with(holder.binding) {
             title.text = item.title
-            subtitle.text = item.source
+            val categoryLabel = holder.itemView.context.getString(item.category.labelRes())
+            val sourceText = item.source.takeIf { it.isNotBlank() }
+            subtitle.text = if (sourceText.isNullOrBlank()) {
+                categoryLabel
+            } else {
+                holder.itemView.context.getString(
+                    R.string.next_up_subtitle_format,
+                    categoryLabel,
+                    sourceText
+                )
+            }
+            categoryIcon.setImageResource(item.category.iconRes())
+            val tintColor = ContextCompat.getColor(holder.itemView.context, item.category.tintRes())
+            categoryIcon.backgroundTintList = ColorStateList.valueOf(tintColor)
+            categoryIcon.imageTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(holder.itemView.context, android.R.color.white)
+            )
+            categoryIcon.contentDescription = holder.itemView.context.getString(
+                R.string.category_icon_content_description,
+                categoryLabel
+            )
             root.setOnClickListener { onClick(item) }
         }
     }

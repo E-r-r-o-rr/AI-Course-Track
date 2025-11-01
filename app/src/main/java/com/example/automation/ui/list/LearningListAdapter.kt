@@ -1,6 +1,6 @@
 package com.example.automation.ui.list
 
-import android.graphics.drawable.GradientDrawable
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -12,7 +12,9 @@ import com.example.automation.R
 import com.example.automation.databinding.ItemLearningBinding
 import com.example.automation.model.LearningItem
 import com.example.automation.model.LearningStatus
-import kotlin.math.absoluteValue
+import com.example.automation.ui.category.iconRes
+import com.example.automation.ui.category.labelRes
+import com.example.automation.ui.category.tintRes
 
 class LearningListAdapter(
     private val onItemClick: (LearningItem) -> Unit,
@@ -36,7 +38,21 @@ class LearningListAdapter(
         val item = getItem(position)
         with(holder.binding) {
             title.text = item.title
-            source.text = holder.itemView.context.getString(R.string.list_source_format, item.source)
+            val categoryLabel = holder.itemView.context.getString(item.category.labelRes())
+            val sourceText = item.source.takeIf { it.isNotBlank() }
+            meta.text = if (sourceText.isNullOrBlank()) {
+                categoryLabel
+            } else {
+                holder.itemView.context.getString(
+                    R.string.list_meta_format,
+                    categoryLabel,
+                    sourceText
+                )
+            }
+            categoryIcon.contentDescription = holder.itemView.context.getString(
+                R.string.category_icon_content_description,
+                categoryLabel
+            )
             statusChip.text = when (item.status) {
                 LearningStatus.TODO -> holder.itemView.context.getString(R.string.status_todo)
                 LearningStatus.IN_PROGRESS -> holder.itemView.context.getString(R.string.status_in_progress)
@@ -60,23 +76,13 @@ class LearningListAdapter(
                 tagsGroup.addView(chip)
             }
             tagsGroup.isVisible = item.tags.isNotEmpty()
-            favicon.text = item.source.firstOrNull()?.uppercase() ?: "?"
-            favicon.background = GradientDrawable().apply {
-                shape = GradientDrawable.OVAL
-                setColor(randomColorFor(holder.itemView.context, item.source))
-            }
+            categoryIcon.setImageResource(item.category.iconRes())
+            val tintColor = ContextCompat.getColor(holder.itemView.context, item.category.tintRes())
+            categoryIcon.backgroundTintList = ColorStateList.valueOf(tintColor)
+            categoryIcon.imageTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(holder.itemView.context, android.R.color.white)
+            )
             root.setOnClickListener { onItemClick(item) }
         }
-    }
-
-    private fun randomColorFor(context: android.content.Context, source: String): Int {
-        val colors = listOf(
-            R.color.avatarBlue,
-            R.color.avatarGreen,
-            R.color.avatarPurple,
-            R.color.avatarOrange
-        )
-        val index = (source.hashCode().absoluteValue) % colors.size
-        return ContextCompat.getColor(context, colors[index])
     }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.automation.data.LearningRepository
 import com.example.automation.data.preferences.ThemePreferences
 import com.example.automation.model.BrowseSuggestion
+import com.example.automation.model.LearningCategory
 import com.example.automation.model.LearningItem
 import com.example.automation.model.LearningStatus
 import kotlinx.coroutines.Dispatchers
@@ -143,6 +144,7 @@ class BrowseViewModel(private val repository: LearningRepository) : ViewModel() 
                         title = suggestion.title,
                         url = suggestion.url,
                         source = suggestion.source,
+                        category = suggestion.category,
                         tags = suggestion.tags,
                         status = LearningStatus.TODO,
                         note = "",
@@ -175,6 +177,7 @@ private fun defaultSuggestions(): List<BrowseSuggestion> = listOf(
         url = "https://www.futurelearn.com/info/blog/design-a-learning-plan",
         description = "Create a long-term learning strategy with checkpoints and reflection prompts.",
         tags = listOf("Planning", "Self-Improvement"),
+        category = LearningCategory.BOOK,
         duration = "15 min read"
     ),
     BrowseSuggestion(
@@ -183,6 +186,7 @@ private fun defaultSuggestions(): List<BrowseSuggestion> = listOf(
         url = "https://kotlinlang.org/docs/coroutines-guide.html",
         description = "Understand structured concurrency, scopes, and flows in modern Kotlin.",
         tags = listOf("Kotlin", "Concurrency"),
+        category = LearningCategory.COURSE,
         duration = "2 hr course"
     ),
     BrowseSuggestion(
@@ -191,6 +195,7 @@ private fun defaultSuggestions(): List<BrowseSuggestion> = listOf(
         url = "https://medium.com/swlh/deep-work-for-developers-4aefb1b72a6",
         description = "Tactics to reclaim focus time and ship meaningful projects.",
         tags = listOf("Productivity", "Mindset"),
+        category = LearningCategory.BOOK,
         duration = "10 min read"
     ),
     BrowseSuggestion(
@@ -199,7 +204,17 @@ private fun defaultSuggestions(): List<BrowseSuggestion> = listOf(
         url = "https://academy.amplitude.com/path/product-analytics-crash-course",
         description = "Learn funnels, cohorts, and retention with practical product metrics exercises.",
         tags = listOf("Analytics", "Product"),
+        category = LearningCategory.COURSE,
         duration = "1.5 hr course"
+    ),
+    BrowseSuggestion(
+        title = "Designing with Data: YouTube Live",
+        source = "UX Salon",
+        url = "https://www.youtube.com/watch?v=ykQ0RduCMs8",
+        description = "A practical session on using qualitative and quantitative insights in product decisions.",
+        tags = listOf("UX", "Data"),
+        category = LearningCategory.VIDEO,
+        duration = "58 min video"
     ),
     BrowseSuggestion(
         title = "Navigate the Research Rabbit Hole",
@@ -207,15 +222,17 @@ private fun defaultSuggestions(): List<BrowseSuggestion> = listOf(
         url = "https://nesslabs.com/research-rabbit-hole",
         description = "A framework for exploring new topics without losing momentum.",
         tags = listOf("Research", "Frameworks"),
+        category = LearningCategory.BOOK,
         duration = "8 min read"
     ),
     BrowseSuggestion(
-        title = "Systems Thinking 101",
-        source = "Coursera",
-        url = "https://www.coursera.org/learn/systems-thinking",
-        description = "Recognize feedback loops, leverage points, and map complex systems.",
-        tags = listOf("Systems", "Strategy"),
-        duration = "4 week course"
+        title = "Focus & Flow with Cal Newport",
+        source = "Deep Questions Podcast",
+        url = "https://www.listennotes.com/podcasts/deep-questions/focus-flow-with-cal-newport-6F-3rpsdpKx/",
+        description = "Cal dives into strategies for protecting deep work time and reducing overload.",
+        tags = listOf("Productivity", "Mindset"),
+        category = LearningCategory.PODCAST,
+        duration = "52 min podcast"
     )
 )
 

@@ -16,6 +16,11 @@
     <color name="avatarPurple">#B197FC</color>
     <color name="avatarOrange">#FFB347</color>
 
+    <color name="categoryCourse">#748FFC</color>
+    <color name="categoryVideo">#FF8787</color>
+    <color name="categoryBook">#63E6BE</color>
+    <color name="categoryPodcast">#B197FC</color>
+
     <color name="brand_gradient_start">#1F2A56</color>
     <color name="brand_gradient_end">#0F1B3F</color>
     <color name="glass_surface">#CC253975</color>

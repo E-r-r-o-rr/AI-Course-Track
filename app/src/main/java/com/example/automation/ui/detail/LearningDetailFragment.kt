@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.content.res.ColorStateList
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -22,6 +24,9 @@ import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningDetailViewModel
 import com.example.automation.ui.ThemeViewModel
 import com.example.automation.ui.theme.updateThemeMenuItem
+import com.example.automation.ui.category.iconRes
+import com.example.automation.ui.category.labelRes
+import com.example.automation.ui.category.tintRes
 
 class LearningDetailFragment : Fragment() {
     private var _binding: FragmentLearningDetailBinding? = null
@@ -113,7 +118,19 @@ class LearningDetailFragment : Fragment() {
                 return@observe
             }
             binding.toolbar.title = item.title
+            binding.categoryIcon.setImageResource(item.category.iconRes())
+            val tintColor = ContextCompat.getColor(requireContext(), item.category.tintRes())
+            binding.categoryIcon.backgroundTintList = ColorStateList.valueOf(tintColor)
+            binding.categoryIcon.imageTintList = ColorStateList.valueOf(
+                ContextCompat.getColor(requireContext(), android.R.color.white)
+            )
+            binding.categoryLabel.text = getString(item.category.labelRes())
+            binding.categoryIcon.contentDescription = getString(
+                R.string.category_icon_content_description,
+                binding.categoryLabel.text.toString()
+            )
             binding.source.text = getString(R.string.detail_source_format, item.source)
+            binding.source.isVisible = item.source.isNotBlank()
             binding.statusToggle.check(
                 when (item.status) {
                     LearningStatus.TODO -> R.id.buttonTodo

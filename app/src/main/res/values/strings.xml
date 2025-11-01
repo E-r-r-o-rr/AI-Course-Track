@@ -8,7 +8,7 @@
     <string name="status_all">All</string>
     <string name="filter_by_tag">Filter by tag</string>
     <string name="empty_list">Nothing saved yet. Add the courses or articles you want to finish.</string>
-    <string name="list_source_format">%1$s • tap status to cycle</string>
+    <string name="list_meta_format">%1$s • %2$s</string>
     <string name="detail_source_format">Source: %1$s</string>
     <string name="open_link">Open link</string>
     <string name="notes_hint">Notes and reflections</string>
@@ -23,6 +23,7 @@
     <string name="field_source">Source</string>
     <string name="field_tags">Tags (comma separated)</string>
     <string name="status_label">Status</string>
+    <string name="category_label">Type</string>
     <string name="save">Save</string>
     <string name="validation_error">Fill out title, link, and source</string>
     <string name="dashboard_title">Dashboard</string>
@@ -56,4 +57,11 @@
     <string name="notification_channel_name">Learning reminders</string>
     <string name="no_browser">No app found to open this link.</string>
     <string name="notes_label">Notes</string>
+    <string name="category_course">Course</string>
+    <string name="category_video">YouTube Video</string>
+    <string name="category_book">Book</string>
+    <string name="category_podcast">Podcast</string>
+    <string name="next_up_subtitle_format">%1$s • %2$s</string>
+    <string name="browse_meta_format">%1$s • %2$s</string>
+    <string name="category_icon_content_description">Type: %1$s</string>
 </resources>

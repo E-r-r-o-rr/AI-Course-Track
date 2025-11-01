@@ -52,6 +52,11 @@
     <color name="avatarPurple">#845EF7</color>
     <color name="avatarOrange">#FF922B</color>
 
+    <color name="categoryCourse">#5C7CFA</color>
+    <color name="categoryVideo">#FF6B6B</color>
+    <color name="categoryBook">#4ECDC4</color>
+    <color name="categoryPodcast">#845EF7</color>
+
     <!-- Material 3 mapping (light) -->
     <color name="md_sys_color_primary">@color/brand_500</color>
     <color name="md_sys_color_onPrimary">@color/white</color>
