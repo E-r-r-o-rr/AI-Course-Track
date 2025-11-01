@@ -1,6 +1,7 @@
 package com.example.automation.ui.list
 
 import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.automation.R
 import com.example.automation.databinding.FragmentLearningListBinding
 import com.example.automation.model.LearningItem
@@ -70,7 +71,8 @@ class LearningListFragment : Fragment() {
             onItemClick = { openDetail(it) },
             onToggleStatus = { viewModel.toggleStatus(it) }
         )
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
+        binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerView.adapter = adapter
 
         binding.statusChips.setOnCheckedStateChangeListener { _, checkedIds ->
