@@ -69,11 +69,19 @@ class LearningListFragment : Fragment() {
 
         adapter = LearningListAdapter(
             onItemClick = { openDetail(it) },
-            onToggleStatus = { viewModel.toggleStatus(it) }
+            onToggleStatus = { viewModel.toggleStatus(it) },
+            onAddToQueue = { viewModel.addToQueue(it) }
         )
         val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerView.adapter = adapter
+
+        binding.createLearningItem.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_learningListFragment_to_learningEditFragment,
+                Bundle().apply { putLong("itemId", 0L) }
+            )
+        }
 
         binding.statusChips.setOnCheckedStateChangeListener { _, checkedIds ->
             val status = when (checkedIds.firstOrNull()) {

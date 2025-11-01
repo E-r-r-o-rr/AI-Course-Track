@@ -30,7 +30,62 @@ class LearningRepository private constructor(context: Context) {
         LearningSummary(total = total, done = done, inProgress = inProgress)
     }
 
-    fun observeNextUp(): Flow<List<LearningItem>> = dao.observeNextUp(LearningStatus.DONE)
+    fun observeCurrentTasks(): Flow<List<LearningItem>> =
+        dao.observeByStatus(LearningStatus.IN_PROGRESS)
+
+    fun observeQueuedItems(): Flow<List<LearningItem>> =
+        observeItems().map { items ->
+            items.filter { it.queued && it.status == LearningStatus.TODO }
+        }
+
+    suspend fun addToQueue(id: Long) {
+        val current = dao.findById(id) ?: return
+        dao.update(
+            current.copy(
+                status = LearningStatus.TODO,
+                queued = true,
+                completedAt = null
+            )
+        )
+    }
+
+    suspend fun removeFromQueue(id: Long) {
+        val current = dao.findById(id) ?: return
+        dao.update(current.copy(queued = false))
+    }
+
+    suspend fun startItem(id: Long) {
+        val current = dao.findById(id) ?: return
+        dao.update(
+            current.copy(
+                status = LearningStatus.IN_PROGRESS,
+                queued = current.queued,
+                completedAt = null
+            )
+        )
+    }
+
+    suspend fun moveToQueue(id: Long) {
+        val current = dao.findById(id) ?: return
+        dao.update(
+            current.copy(
+                status = LearningStatus.TODO,
+                queued = true,
+                completedAt = null
+            )
+        )
+    }
+
+    suspend fun completeItem(id: Long) {
+        val current = dao.findById(id) ?: return
+        dao.update(
+            current.copy(
+                status = LearningStatus.DONE,
+                queued = false,
+                completedAt = System.currentTimeMillis()
+            )
+        )
+    }
 
     suspend fun insert(item: LearningItem) {
         dao.insert(item)
@@ -50,6 +105,7 @@ class LearningRepository private constructor(context: Context) {
         val current = dao.findById(id) ?: return
         val updated = current.copy(
             status = status,
+            queued = if (status == LearningStatus.DONE) false else current.queued,
             completedAt = if (status == LearningStatus.DONE) System.currentTimeMillis() else null
         )
         dao.update(updated)
