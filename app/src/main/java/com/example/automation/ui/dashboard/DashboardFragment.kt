@@ -121,24 +121,28 @@ class DashboardFragment : Fragment() {
             binding.emptyQueued?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
         }
 
-        binding.viewLibraryButton?.setOnClickListener {
-            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)
-            val navRail = requireActivity().findViewById<NavigationRailView>(R.id.navRail)
-            when {
-                navRail != null && navRail.visibility == View.VISIBLE -> {
-                    navRail.selectedItemId = R.id.learningListFragment
-                }
-                bottomNav != null -> {
-                    bottomNav.selectedItemId = R.id.learningListFragment
+        binding.viewLibraryButton?.let { button ->
+            button.setOnClickListener {
+                val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)
+                val navRail = requireActivity().findViewById<NavigationRailView>(R.id.navRail)
+                when {
+                    navRail != null && navRail.visibility == View.VISIBLE -> {
+                        navRail.selectedItemId = R.id.learningListFragment
+                    }
+                    bottomNav != null -> {
+                        bottomNav.selectedItemId = R.id.learningListFragment
+                    }
                 }
             }
         }
 
-        binding.createItemButton?.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_dashboardFragment_to_learningEditFragment,
-                Bundle().apply { putLong("itemId", 0L) }
-            )
+        binding.createItemButton?.let { button ->
+            button.setOnClickListener {
+                findNavController().navigate(
+                    R.id.action_dashboardFragment_to_learningEditFragment,
+                    Bundle().apply { putLong("itemId", 0L) }
+                )
+            }
         }
 
     }
