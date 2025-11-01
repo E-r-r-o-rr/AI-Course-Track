@@ -30,8 +30,8 @@
     <color name="glass_surface_alt">#B3FFFFFF</color>
     <color name="glass_highlight">#40FFFFFF</color>
     <color name="glass_stroke">#66FFFFFF</color>
-    <color name="glass_chip_surface">#F1F4FF</color>
-    <color name="glass_chip_stroke">#CBD6FF</color>
+    <color name="glass_chip_surface">#E1E8FF</color>
+    <color name="glass_chip_stroke">#B6C4FF</color>
     <color name="glass_toolbar_tint">#F2F5FF</color>
 
     <color name="toolbar_gradient_start">#CC422AFB</color>

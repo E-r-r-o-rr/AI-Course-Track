@@ -63,6 +63,7 @@
 
     <style name="Horizon.Chip.Assist" parent="Widget.Material3.Chip.Assist">
         <item name="chipBackgroundColor">@color/glass_chip_surface</item>
+        <item name="chipSurfaceColor">@color/glass_chip_surface</item>
         <item name="chipStrokeColor">@color/glass_chip_stroke</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="android:textColor">@color/primaryText</item>
