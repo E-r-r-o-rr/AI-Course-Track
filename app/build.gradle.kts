@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "com.example.automation"
     compileSdk {
-        version = release(35)
+        version = release(36)
     }
 
     defaultConfig {
@@ -49,11 +49,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.datastore.preferences)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    // Testing
     androidTestImplementation("androidx.test.espresso:espresso-contrib:3.5.1")
     androidTestImplementation("androidx.test:runner:1.5.2")
     androidTestImplementation("androidx.test:rules:1.5.0")
@@ -79,6 +80,9 @@ dependencies {
 
     // WorkManager
     implementation("androidx.work:work-runtime-ktx:2.9.1")
+
+    // datastore
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
 
 }

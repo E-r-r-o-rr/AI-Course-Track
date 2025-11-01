@@ -67,7 +67,7 @@
                             android:contentDescription="@null"
                             android:padding="10dp"
                             android:src="@drawable/ic_dashboard_24"
-                            android:tint="@android:color/white"
+                            app:tint="@android:color/white"
                             android:scaleType="centerInside"
                             android:clipToOutline="true" />
 
@@ -204,7 +204,7 @@
                             android:layout_width="28dp"
                             android:layout_height="28dp"
                             android:src="@drawable/ic_list_24"
-                            android:tint="@color/blue_secondary"
+                            app:tint="@color/blue_secondary"
                             android:contentDescription="@null" />
                     </LinearLayout>
 
