@@ -32,6 +32,9 @@
     <string name="summary_total">Saved</string>
     <string name="summary_in_progress">In progress</string>
     <string name="summary_done">Done</string>
+    <string name="weekly_goal_title">Weekly goal</string>
+    <string name="weekly_goal_subtitle">Complete five items to hit your target.</string>
+    <string name="weekly_goal_progress_content_description">Weekly goal progress: %1$d of %2$d tasks completed.</string>
     <string name="library_subtitle">Organise your saved lessons with quick filters.</string>
     <string name="library_filters_title">Quick filters</string>
     <string name="next_up">What\'s next</string>

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -66,10 +67,33 @@ class DashboardFragment : Fragment() {
         binding.nextUpList.adapter = adapter
         binding.nextUpList.isNestedScrollingEnabled = false
 
+        val weeklyGoalViews = listOf(
+            binding.weeklyGoalCircle1,
+            binding.weeklyGoalCircle2,
+            binding.weeklyGoalCircle3,
+            binding.weeklyGoalCircle4,
+            binding.weeklyGoalCircle5,
+        )
+
         viewModel.summary.observe(viewLifecycleOwner) { summary ->
             binding.totalCount.text = summary.total.toString()
             binding.doneCount.text = summary.done.toString()
             binding.progressCount.text = summary.inProgress.toString()
+
+            val completedForGoal = summary.done.coerceAtMost(weeklyGoalViews.size)
+            weeklyGoalViews.forEachIndexed { index, view ->
+                val drawableRes = if (index < completedForGoal) {
+                    R.drawable.bg_weekly_goal_circle_filled
+                } else {
+                    R.drawable.bg_weekly_goal_circle_empty
+                }
+                view.background = ContextCompat.getDrawable(requireContext(), drawableRes)
+            }
+            binding.weeklyGoalContainer.contentDescription = getString(
+                R.string.weekly_goal_progress_content_description,
+                completedForGoal,
+                weeklyGoalViews.size
+            )
         }
 
         viewModel.nextUp.observe(viewLifecycleOwner) { list ->
