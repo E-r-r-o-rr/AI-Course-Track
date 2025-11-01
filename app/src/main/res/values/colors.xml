@@ -28,8 +28,8 @@
     <color name="brand_gradient_end">#D6E2FF</color>
     <color name="glass_surface">#CCFFFFFF</color>
     <color name="glass_surface_alt">#B3FFFFFF</color>
-    <color name="glass_highlight">#40FFFFFF</color>
-    <color name="glass_stroke">#66FFFFFF</color>
+    <color name="glass_highlight">#66F0F4FF</color>
+    <color name="glass_stroke">#C0C9D8FF</color>
     <color name="glass_chip_surface">#E1E8FF</color>
     <color name="glass_chip_stroke">#B6C4FF</color>
     <color name="glass_toolbar_tint">#F2F5FF</color>
