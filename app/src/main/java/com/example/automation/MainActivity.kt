@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.activity.addCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequestBuilder
@@ -48,13 +50,14 @@ class MainActivity : AppCompatActivity() {
         val navHost = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         val controller = navHost.navController
         binding.bottomNav.setupWithNavController(controller)
+        NavigationUI.setupWithNavController(binding.navRail, controller)
 
         onBackPressedDispatcher.addCallback(this) {
             when (controller.currentDestination?.id) {
                 R.id.learningListFragment -> {
                     val returnedToDashboard = controller.popBackStack(R.id.dashboardFragment, false)
                     if (!returnedToDashboard) {
-                        binding.bottomNav.selectedItemId = R.id.dashboardFragment
+                        selectDestination(R.id.dashboardFragment)
                     }
                 }
                 else -> {
@@ -109,5 +112,14 @@ class MainActivity : AppCompatActivity() {
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.isAppearanceLightStatusBars = !isDark
         controller.isAppearanceLightNavigationBars = !isDark
+    }
+
+    private fun selectDestination(destinationId: Int) {
+        if (binding.bottomNav.visibility == View.VISIBLE) {
+            binding.bottomNav.selectedItemId = destinationId
+        }
+        if (binding.navRail.visibility == View.VISIBLE) {
+            binding.navRail.selectedItemId = destinationId
+        }
     }
 }

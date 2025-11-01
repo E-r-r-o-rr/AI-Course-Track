@@ -17,6 +17,7 @@ import com.example.automation.ui.DashboardViewModel
 import com.example.automation.ui.ThemeViewModel
 import com.example.automation.ui.theme.updateThemeMenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigationrail.NavigationRailView
 
 class DashboardFragment : Fragment() {
     private var _binding: FragmentDashboardBinding? = null
@@ -78,7 +79,15 @@ class DashboardFragment : Fragment() {
 
         binding.openLibrary.setOnClickListener {
             val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)
-            bottomNav?.let { nav -> nav.selectedItemId = R.id.learningListFragment }
+            val navRail = requireActivity().findViewById<NavigationRailView>(R.id.navRail)
+            when {
+                navRail != null && navRail.visibility == View.VISIBLE -> {
+                    navRail.selectedItemId = R.id.learningListFragment
+                }
+                bottomNav != null -> {
+                    bottomNav.selectedItemId = R.id.learningListFragment
+                }
+            }
         }
 
     }
