@@ -89,7 +89,7 @@ class DashboardFragment : Fragment() {
                 }
                 view.background = ContextCompat.getDrawable(requireContext(), drawableRes)
             }
-            binding.weeklyGoalContainer.contentDescription = getString(
+            binding.weeklyGoalContainer?.contentDescription = getString(
                 R.string.weekly_goal_progress_content_description,
                 completedForGoal,
                 weeklyGoalViews.size
