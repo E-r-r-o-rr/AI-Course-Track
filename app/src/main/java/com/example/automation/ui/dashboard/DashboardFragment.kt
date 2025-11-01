@@ -26,7 +26,8 @@ class DashboardFragment : Fragment() {
     private lateinit var viewModelFactory: AppViewModelFactory
     private val viewModel: DashboardViewModel by viewModels { viewModelFactory }
     private lateinit var themeViewModel: ThemeViewModel
-    private lateinit var adapter: NextUpAdapter
+    private lateinit var currentTaskAdapter: DashboardItemAdapter
+    private lateinit var queuedAdapter: DashboardItemAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -57,15 +58,25 @@ class DashboardFragment : Fragment() {
             updateThemeMenuItem(requireContext(), themeItem, mode)
         }
 
-        adapter = NextUpAdapter { item ->
+        currentTaskAdapter = DashboardItemAdapter { item ->
             findNavController().navigate(
                 R.id.action_dashboardFragment_to_learningDetailFragment,
                 Bundle().apply { putLong("itemId", item.id) }
             )
         }
-        binding.nextUpList.layoutManager = LinearLayoutManager(requireContext())
-        binding.nextUpList.adapter = adapter
-        binding.nextUpList.isNestedScrollingEnabled = false
+        binding.currentTaskList.layoutManager = LinearLayoutManager(requireContext())
+        binding.currentTaskList.adapter = currentTaskAdapter
+        binding.currentTaskList.isNestedScrollingEnabled = false
+
+        queuedAdapter = DashboardItemAdapter { item ->
+            findNavController().navigate(
+                R.id.action_dashboardFragment_to_learningDetailFragment,
+                Bundle().apply { putLong("itemId", item.id) }
+            )
+        }
+        binding.queuedList.layoutManager = LinearLayoutManager(requireContext())
+        binding.queuedList.adapter = queuedAdapter
+        binding.queuedList.isNestedScrollingEnabled = false
 
         val weeklyGoalViews = listOfNotNull(
             binding.weeklyGoalCircle1,
@@ -96,12 +107,17 @@ class DashboardFragment : Fragment() {
             )
         }
 
-        viewModel.nextUp.observe(viewLifecycleOwner) { list ->
-            adapter.submitList(list)
-            binding.emptyNextUp.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        viewModel.currentTasks.observe(viewLifecycleOwner) { list ->
+            currentTaskAdapter.submitList(list)
+            binding.emptyCurrentTask.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
         }
 
-        binding.openLibrary.setOnClickListener {
+        viewModel.queuedItems.observe(viewLifecycleOwner) { list ->
+            queuedAdapter.submitList(list)
+            binding.emptyQueued.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        }
+
+        binding.viewLibraryButton.setOnClickListener {
             val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)
             val navRail = requireActivity().findViewById<NavigationRailView>(R.id.navRail)
             when {
@@ -112,6 +128,13 @@ class DashboardFragment : Fragment() {
                     bottomNav.selectedItemId = R.id.learningListFragment
                 }
             }
+        }
+
+        binding.createItemButton.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_dashboardFragment_to_learningEditFragment,
+                Bundle().apply { putLong("itemId", 0L) }
+            )
         }
 
     }

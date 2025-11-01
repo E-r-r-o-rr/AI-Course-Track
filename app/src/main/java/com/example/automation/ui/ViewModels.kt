@@ -68,6 +68,12 @@ class LearningListViewModel(private val repository: LearningRepository) : ViewMo
             repository.updateStatus(item.id, nextStatus)
         }
     }
+
+    fun addToQueue(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.queueItem(item.id)
+        }
+    }
 }
 
 class LearningDetailViewModel(private val repository: LearningRepository) : ViewModel() {
@@ -112,7 +118,8 @@ class LearningEditViewModel(private val repository: LearningRepository) : ViewMo
 
 class DashboardViewModel(private val repository: LearningRepository) : ViewModel() {
     val summary = repository.observeSummary().asLiveData()
-    val nextUp = repository.observeNextUp().asLiveData()
+    val currentTasks = repository.observeCurrentTasks().asLiveData()
+    val queuedItems = repository.observeQueuedItems().asLiveData()
 }
 
 class ThemeViewModel(private val preferences: ThemePreferences) : ViewModel() {

@@ -7,15 +7,15 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.automation.R
 import com.example.automation.databinding.ItemNextUpBinding
 import com.example.automation.model.LearningItem
 import com.example.automation.ui.category.iconRes
 import com.example.automation.ui.category.labelRes
 import com.example.automation.ui.category.tintRes
-import com.example.automation.R
 
-class NextUpAdapter(private val onClick: (LearningItem) -> Unit) :
-    ListAdapter<LearningItem, NextUpAdapter.ViewHolder>(Diff) {
+class DashboardItemAdapter(private val onClick: (LearningItem) -> Unit) :
+    ListAdapter<LearningItem, DashboardItemAdapter.ViewHolder>(Diff) {
 
     object Diff : DiffUtil.ItemCallback<LearningItem>() {
         override fun areItemsTheSame(oldItem: LearningItem, newItem: LearningItem) = oldItem.id == newItem.id
