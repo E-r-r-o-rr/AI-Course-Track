@@ -64,9 +64,11 @@ class DashboardFragment : Fragment() {
                 Bundle().apply { putLong("itemId", item.id) }
             )
         }
-        binding.currentTaskList.layoutManager = LinearLayoutManager(requireContext())
-        binding.currentTaskList.adapter = currentTaskAdapter
-        binding.currentTaskList.isNestedScrollingEnabled = false
+        binding.currentTaskList?.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = currentTaskAdapter
+            isNestedScrollingEnabled = false
+        }
 
         queuedAdapter = DashboardItemAdapter { item ->
             findNavController().navigate(
@@ -74,9 +76,11 @@ class DashboardFragment : Fragment() {
                 Bundle().apply { putLong("itemId", item.id) }
             )
         }
-        binding.queuedList.layoutManager = LinearLayoutManager(requireContext())
-        binding.queuedList.adapter = queuedAdapter
-        binding.queuedList.isNestedScrollingEnabled = false
+        binding.queuedList?.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = queuedAdapter
+            isNestedScrollingEnabled = false
+        }
 
         val weeklyGoalViews = listOfNotNull(
             binding.weeklyGoalCircle1,
