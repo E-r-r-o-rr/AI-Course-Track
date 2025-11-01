@@ -17,6 +17,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/browseFragment"
+        android:name="com.example.automation.ui.browse.BrowseFragment"
+        android:label="Browse" />
+
+    <fragment
         android:id="@+id/learningListFragment"
         android:name="com.example.automation.ui.list.LearningListFragment"
         android:label="Library">

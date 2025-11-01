@@ -80,6 +80,11 @@ class DashboardFragment : Fragment() {
             val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)
             bottomNav?.let { nav -> nav.selectedItemId = R.id.learningListFragment }
         }
+
+        binding.browseCatalog.setOnClickListener {
+            val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)
+            bottomNav?.let { nav -> nav.selectedItemId = R.id.browseFragment }
+        }
     }
 
     override fun onDestroyView() {

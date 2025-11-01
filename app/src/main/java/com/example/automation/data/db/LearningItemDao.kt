@@ -34,4 +34,7 @@ interface LearningItemDao {
 
     @Query("SELECT * FROM learning_items WHERE status != :status ORDER BY addedAt ASC LIMIT 5")
     fun observeNextUp(status: LearningStatus): Flow<List<LearningItem>>
+
+    @Query("SELECT EXISTS(SELECT 1 FROM learning_items WHERE url = :url LIMIT 1)")
+    suspend fun existsByUrl(url: String): Boolean
 }

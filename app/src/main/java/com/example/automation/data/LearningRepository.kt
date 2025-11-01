@@ -60,6 +60,8 @@ class LearningRepository private constructor(context: Context) {
         dao.update(current.copy(note = note))
     }
 
+    suspend fun existsByUrl(url: String): Boolean = dao.existsByUrl(url)
+
     companion object {
         @Volatile private var INSTANCE: LearningRepository? = null
 

@@ -57,6 +57,12 @@ class MainActivity : AppCompatActivity() {
                         binding.bottomNav.selectedItemId = R.id.dashboardFragment
                     }
                 }
+                R.id.browseFragment -> {
+                    val returnedToDashboard = controller.popBackStack(R.id.dashboardFragment, false)
+                    if (!returnedToDashboard) {
+                        binding.bottomNav.selectedItemId = R.id.dashboardFragment
+                    }
+                }
                 else -> {
                     if (!controller.popBackStack()) {
                         finish()
