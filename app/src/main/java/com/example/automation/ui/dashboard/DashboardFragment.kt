@@ -91,9 +91,9 @@ class DashboardFragment : Fragment() {
         )
 
         viewModel.summary.observe(viewLifecycleOwner) { summary ->
-            binding.totalCount.text = summary.total.toString()
-            binding.doneCount.text = summary.done.toString()
-            binding.progressCount.text = summary.inProgress.toString()
+            binding.totalCount?.text = summary.total.toString()
+            binding.doneCount?.text = summary.done.toString()
+            binding.progressCount?.text = summary.inProgress.toString()
 
             val completedForGoal = summary.done.coerceAtMost(weeklyGoalViews.size)
             weeklyGoalViews.forEachIndexed { index, view ->
@@ -113,15 +113,15 @@ class DashboardFragment : Fragment() {
 
         viewModel.currentTasks.observe(viewLifecycleOwner) { list ->
             currentTaskAdapter.submitList(list)
-            binding.emptyCurrentTask.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            binding.emptyCurrentTask?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
         }
 
         viewModel.queuedItems.observe(viewLifecycleOwner) { list ->
             queuedAdapter.submitList(list)
-            binding.emptyQueued.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+            binding.emptyQueued?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
         }
 
-        binding.viewLibraryButton.setOnClickListener {
+        binding.viewLibraryButton?.setOnClickListener {
             val bottomNav = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNav)
             val navRail = requireActivity().findViewById<NavigationRailView>(R.id.navRail)
             when {
@@ -134,7 +134,7 @@ class DashboardFragment : Fragment() {
             }
         }
 
-        binding.createItemButton.setOnClickListener {
+        binding.createItemButton?.setOnClickListener {
             findNavController().navigate(
                 R.id.action_dashboardFragment_to_learningEditFragment,
                 Bundle().apply { putLong("itemId", 0L) }
