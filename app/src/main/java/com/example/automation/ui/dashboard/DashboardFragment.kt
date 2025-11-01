@@ -67,7 +67,7 @@ class DashboardFragment : Fragment() {
         binding.nextUpList.adapter = adapter
         binding.nextUpList.isNestedScrollingEnabled = false
 
-        val weeklyGoalViews = listOf(
+        val weeklyGoalViews = listOfNotNull(
             binding.weeklyGoalCircle1,
             binding.weeklyGoalCircle2,
             binding.weeklyGoalCircle3,
