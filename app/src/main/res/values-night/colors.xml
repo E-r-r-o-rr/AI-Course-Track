@@ -27,6 +27,8 @@
     <color name="glass_surface_alt">#99203369</color>
     <color name="glass_highlight">#802F448B</color>
     <color name="glass_stroke">#D34257A4</color>
+    <color name="glass_chip_surface">#6632488E</color>
+    <color name="glass_chip_stroke">#994E64C4</color>
     <color name="glass_toolbar_tint">#992B3F82</color>
     <color name="toolbar_gradient_start">#CC1B254B</color>
     <color name="toolbar_gradient_end">#CC111C44</color>

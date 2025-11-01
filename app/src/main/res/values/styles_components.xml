@@ -53,17 +53,18 @@
     </style>
 
     <style name="Horizon.Chip.Filter" parent="Widget.Material3.Chip.Filter">
-        <item name="chipBackgroundColor">@color/glass_highlight</item>
-        <item name="chipSurfaceColor">@color/glass_highlight</item>
-        <item name="chipStrokeColor">@color/glass_stroke</item>
+        <item name="chipBackgroundColor">@color/glass_chip_surface</item>
+        <item name="chipSurfaceColor">@color/glass_chip_surface</item>
+        <item name="chipStrokeColor">@color/glass_chip_stroke</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="chipCornerRadius">@dimen/radius_md</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
 
     <style name="Horizon.Chip.Assist" parent="Widget.Material3.Chip.Assist">
-        <item name="chipBackgroundColor">@color/glass_highlight</item>
-        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipBackgroundColor">@color/glass_chip_surface</item>
+        <item name="chipStrokeColor">@color/glass_chip_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
 </resources>
