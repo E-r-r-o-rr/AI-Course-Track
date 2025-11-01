@@ -2,26 +2,51 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/coursesFragment">
+    app:startDestination="@id/dashboardFragment">
 
     <fragment
-        android:id="@+id/coursesFragment"
-        android:name="com.example.automation.courses.CoursesFragment"
-        android:label="Courses">
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.automation.ui.dashboard.DashboardFragment"
+        android:label="Dashboard">
         <action
-            android:id="@+id/action_courses_to_courseDetail"
-            app:destination="@id/courseDetailFragment" />
+            android:id="@+id/action_dashboardFragment_to_learningDetailFragment"
+            app:destination="@id/learningDetailFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_learningListFragment"
+            app:destination="@id/learningListFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/courseDetailFragment"
-        android:name="com.example.automation.course_detail.CourseDetailFragment"
-        android:label="Course Detail" />
-    <action
-        android:id="@+id/action_courseDetail_to_sessionLog"
-        app:destination="@id/sessionLogFragment" />
+        android:id="@+id/learningListFragment"
+        android:name="com.example.automation.ui.list.LearningListFragment"
+        android:label="Library">
+        <action
+            android:id="@+id/action_learningListFragment_to_learningDetailFragment"
+            app:destination="@id/learningDetailFragment" />
+        <action
+            android:id="@+id/action_learningListFragment_to_learningEditFragment"
+            app:destination="@id/learningEditFragment" />
+    </fragment>
+
     <fragment
-        android:id="@+id/sessionLogFragment"
-        android:name="com.example.automation.ui.session_log.SessionLogFragment"
-        android:label="Session Log" />
+        android:id="@+id/learningDetailFragment"
+        android:name="com.example.automation.ui.detail.LearningDetailFragment"
+        android:label="Detail">
+        <argument
+            android:name="itemId"
+            app:argType="long" />
+        <action
+            android:id="@+id/action_learningDetailFragment_to_learningEditFragment"
+            app:destination="@id/learningEditFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/learningEditFragment"
+        android:name="com.example.automation.ui.edit.LearningEditFragment"
+        android:label="Edit">
+        <argument
+            android:name="itemId"
+            app:argType="long" />
+    </fragment>
+
 </navigation>

@@ -23,10 +23,39 @@
     <color name="green_primary">#01B574</color>
     <color name="brand_linear">#868CFF</color>
 
+    <!-- Glassmorphism palette -->
+    <color name="brand_gradient_start">#E9EEFF</color>
+    <color name="brand_gradient_end">#D6E2FF</color>
+    <color name="glass_surface">#CCFFFFFF</color>
+    <color name="glass_surface_alt">#B3FFFFFF</color>
+    <color name="glass_highlight">#40FFFFFF</color>
+    <color name="glass_stroke">#66FFFFFF</color>
+    <color name="glass_toolbar_tint">#F2F5FF</color>
+
+    <color name="toolbar_gradient_start">#CC422AFB</color>
+    <color name="toolbar_gradient_end">#CC7551FF</color>
+    <color name="button_gradient_start">@color/brand_linear</color>
+    <color name="button_gradient_end">@color/blue_secondary</color>
+
     <!-- Shadows / misc -->
     <color name="shadow_500">#147090B0</color> <!-- 0x14 alpha -->
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+
+    <color name="primaryText">@color/gray_900</color>
+    <color name="secondaryText">@color/gray_700</color>
+    <color name="statusTodo">#4C6EF5</color>
+    <color name="statusDoing">#FF922B</color>
+    <color name="statusDone">#2FB344</color>
+    <color name="avatarBlue">#5C7CFA</color>
+    <color name="avatarGreen">#51CF66</color>
+    <color name="avatarPurple">#845EF7</color>
+    <color name="avatarOrange">#FF922B</color>
+
+    <color name="categoryCourse">#5C7CFA</color>
+    <color name="categoryVideo">#FF6B6B</color>
+    <color name="categoryBook">#4ECDC4</color>
+    <color name="categoryPodcast">#845EF7</color>
 
     <!-- Material 3 mapping (light) -->
     <color name="md_sys_color_primary">@color/brand_500</color>
