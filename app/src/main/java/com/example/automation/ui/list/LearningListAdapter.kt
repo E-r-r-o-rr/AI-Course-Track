@@ -72,7 +72,7 @@ class LearningListAdapter(
             statusChip.setTextColor(ContextCompat.getColor(holder.itemView.context, android.R.color.white))
             statusChip.setOnClickListener { onToggleStatus(item) }
             tagsGroup.removeAllViews()
-            item.tags.take(3).forEach { tag ->
+            item.tags.take(2).forEach { tag ->
                 val chip = LayoutInflater.from(tagsGroup.context)
                     .inflate(R.layout.view_tag_chip, tagsGroup, false) as com.google.android.material.chip.Chip
                 chip.text = tag

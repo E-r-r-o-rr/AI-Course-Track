@@ -20,6 +20,7 @@
     <string name="field_title">Title</string>
     <string name="field_source">Source</string>
     <string name="field_tags">Tags (comma separated)</string>
+    <string name="tag_limit_error">You can add up to %1$d tags.</string>
     <string name="status_label">Status</string>
     <string name="category_label">Type</string>
     <string name="save">Save</string>

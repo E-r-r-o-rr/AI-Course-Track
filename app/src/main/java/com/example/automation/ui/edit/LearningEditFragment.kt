@@ -81,6 +81,15 @@ class LearningEditFragment : Fragment() {
                 .split(",")
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
+
+            if (tags.size > MAX_TAGS) {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.tag_limit_error, MAX_TAGS),
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
             val category = when (binding.categoryToggle.checkedButtonId) {
                 R.id.buttonCategoryCourse -> LearningCategory.COURSE
                 R.id.buttonCategoryVideo -> LearningCategory.VIDEO
@@ -163,5 +172,9 @@ class LearningEditFragment : Fragment() {
         binding.buttonCategoryVideo.setIconResource(LearningCategory.VIDEO.iconRes())
         binding.buttonCategoryBook.setIconResource(LearningCategory.BOOK.iconRes())
         binding.buttonCategoryPodcast.setIconResource(LearningCategory.PODCAST.iconRes())
+    }
+
+    companion object {
+        private const val MAX_TAGS = 5
     }
 }
