@@ -80,7 +80,7 @@
         <item name="chipMinHeight">36dp</item>
         <item name="chipStartPadding">16dp</item>
         <item name="chipEndPadding">16dp</item>
-        <item name="chipIconStartPadding">8dp</item>
-        <item name="chipIconEndPadding">8dp</item>
+        <item name="iconStartPadding">8dp</item>
+        <item name="iconEndPadding">8dp</item>
     </style>
 </resources>
