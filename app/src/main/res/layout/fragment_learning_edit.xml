@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -111,10 +112,10 @@
                         android:checkable="true"
                         android:checked="true"
                         android:text="@string/category_course"
-                        app:icon="@drawable/ic_school_24"
                         app:iconGravity="textStart"
                         app:iconPadding="8dp"
-                        app:iconTint="@color/toggle_button_text" />
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_school_24" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonCategoryVideo"
@@ -124,10 +125,10 @@
                         android:layout_weight="1"
                         android:checkable="true"
                         android:text="@string/category_video"
-                        app:icon="@drawable/ic_youtube_24"
                         app:iconGravity="textStart"
                         app:iconPadding="8dp"
-                        app:iconTint="@color/toggle_button_text" />
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_youtube_24" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonCategoryBook"
@@ -137,10 +138,10 @@
                         android:layout_weight="1"
                         android:checkable="true"
                         android:text="@string/category_book"
-                        app:icon="@drawable/ic_book_24"
                         app:iconGravity="textStart"
                         app:iconPadding="8dp"
-                        app:iconTint="@color/toggle_button_text" />
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_book_24" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/buttonCategoryPodcast"
@@ -150,10 +151,10 @@
                         android:layout_weight="1"
                         android:checkable="true"
                         android:text="@string/category_podcast"
-                        app:icon="@drawable/ic_podcast_24"
                         app:iconGravity="textStart"
                         app:iconPadding="8dp"
-                        app:iconTint="@color/toggle_button_text" />
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_podcast_24" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
                 <TextView

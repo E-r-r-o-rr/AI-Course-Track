@@ -19,6 +19,7 @@ import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningEditViewModel
 import com.example.automation.ui.ThemeViewModel
+import com.example.automation.ui.category.iconRes
 import com.example.automation.ui.theme.updateThemeMenuItem
 import kotlinx.coroutines.launch
 
@@ -61,6 +62,8 @@ class LearningEditFragment : Fragment() {
         themeViewModel.themeMode.observe(viewLifecycleOwner) { mode ->
             updateThemeMenuItem(requireContext(), themeItem, mode)
         }
+
+        applyCategoryIcons()
 
         if (itemId != 0L) {
             viewLifecycleOwner.lifecycleScope.launch {
@@ -153,5 +156,12 @@ class LearningEditFragment : Fragment() {
                 LearningStatus.DONE -> R.id.buttonStatusDone
             }
         )
+    }
+
+    private fun applyCategoryIcons() {
+        binding.buttonCategoryCourse.setIconResource(LearningCategory.COURSE.iconRes())
+        binding.buttonCategoryVideo.setIconResource(LearningCategory.VIDEO.iconRes())
+        binding.buttonCategoryBook.setIconResource(LearningCategory.BOOK.iconRes())
+        binding.buttonCategoryPodcast.setIconResource(LearningCategory.PODCAST.iconRes())
     }
 }
