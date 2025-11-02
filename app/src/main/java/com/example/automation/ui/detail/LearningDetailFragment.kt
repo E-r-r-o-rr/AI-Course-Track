@@ -2,7 +2,6 @@ package com.example.automation.ui.detail
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +34,9 @@ class LearningDetailFragment : Fragment() {
     private val viewModel: LearningDetailViewModel by viewModels { viewModelFactory }
     private lateinit var themeViewModel: ThemeViewModel
     private var itemId: Long = 0
+    private var originalNote: String = ""
+    private var pendingNote: String = ""
+    private var isProgrammaticNoteUpdate = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -96,20 +98,21 @@ class LearningDetailFragment : Fragment() {
             }
         }
 
-        binding.openButton.setOnClickListener {
-            viewModel.item.value?.url?.let { url ->
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-                val pm = requireContext().packageManager
-                if (intent.resolveActivity(pm) != null) {
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(requireContext(), R.string.no_browser, Toast.LENGTH_SHORT).show()
-                }
-            }
+        binding.openButton.setOnClickListener { handleOpenLink() }
+
+        binding.saveChangesButton.isEnabled = false
+        binding.saveChangesButton.setOnClickListener {
+            val noteToSave = pendingNote
+            viewModel.saveChanges(noteToSave)
+            originalNote = noteToSave
+            binding.saveChangesButton.isEnabled = false
+            Toast.makeText(requireContext(), R.string.changes_saved, Toast.LENGTH_SHORT).show()
         }
 
         binding.notesEdit.doAfterTextChanged { text ->
-            viewModel.updateNote(text?.toString().orEmpty())
+            if (isProgrammaticNoteUpdate) return@doAfterTextChanged
+            pendingNote = text?.toString().orEmpty()
+            binding.saveChangesButton.isEnabled = pendingNote != originalNote
         }
 
         viewModel.item.observe(viewLifecycleOwner) { item ->
@@ -138,9 +141,16 @@ class LearningDetailFragment : Fragment() {
                     LearningStatus.DONE -> R.id.buttonDone
                 }
             )
-            if (binding.notesEdit.text.toString() != item.note) {
-                binding.notesEdit.setText(item.note)
+            val note = item.note
+            if (binding.notesEdit.text.toString() != note) {
+                isProgrammaticNoteUpdate = true
+                binding.notesEdit.setText(note)
+                binding.notesEdit.setSelection(binding.notesEdit.text?.length ?: 0)
+                isProgrammaticNoteUpdate = false
             }
+            originalNote = note
+            pendingNote = note
+            binding.saveChangesButton.isEnabled = false
             binding.tagsGroup.removeAllViews()
             item.tags.forEach { tag ->
                 val chip = layoutInflater.inflate(R.layout.view_tag_chip, binding.tagsGroup, false) as com.google.android.material.chip.Chip
@@ -148,6 +158,7 @@ class LearningDetailFragment : Fragment() {
                 binding.tagsGroup.addView(chip)
             }
             binding.tagsGroup.isVisible = item.tags.isNotEmpty()
+            binding.openButton.isEnabled = item.url.isNotBlank()
         }
     }
 
@@ -163,5 +174,28 @@ class LearningDetailFragment : Fragment() {
             .setPositiveButton(android.R.string.ok) { _, _ -> viewModel.deleteItem() }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
+    }
+
+    private fun handleOpenLink() {
+        val url = viewModel.item.value?.url?.takeIf { it.isNotBlank() }
+        if (url.isNullOrBlank()) {
+            Toast.makeText(requireContext(), R.string.no_link_available, Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val parsedUri = android.net.Uri.parse(url)
+        val launchUri = if (parsedUri.scheme.isNullOrEmpty()) {
+            android.net.Uri.parse("https://$url")
+        } else {
+            parsedUri
+        }
+
+        val intent = Intent(Intent.ACTION_VIEW, launchUri)
+        val pm = requireContext().packageManager
+        if (intent.resolveActivity(pm) != null) {
+            startActivity(intent)
+        } else {
+            Toast.makeText(requireContext(), R.string.no_browser, Toast.LENGTH_SHORT).show()
+        }
     }
 }

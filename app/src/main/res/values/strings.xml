@@ -54,6 +54,8 @@
     <string name="complete_learning_item">Complete task</string>
     <string name="remove_from_current">Remove from current</string>
     <string name="delete_learning_item">Delete</string>
+    <string name="save_changes">Save changes</string>
+    <string name="changes_saved">Changes saved</string>
     <string name="tab_dashboard">Dashboard</string>
     <string name="tab_library">Library</string>
     <string name="action_toggle_theme">Toggle theme</string>
@@ -63,6 +65,7 @@
     <string name="notification_body">Open your learning queue and choose one item to finish.</string>
     <string name="notification_channel_name">Learning reminders</string>
     <string name="no_browser">No app found to open this link.</string>
+    <string name="no_link_available">No link available to open.</string>
     <string name="notes_label">Notes</string>
     <string name="category_course">Course</string>
     <string name="category_video">YouTube Video</string>
