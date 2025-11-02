@@ -20,6 +20,7 @@ import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningListViewModel
 import com.example.automation.ui.ThemeViewModel
 import com.example.automation.ui.theme.updateThemeMenuItem
+import com.google.android.material.chip.Chip
 
 class LearningListFragment : Fragment() {
     private var _binding: FragmentLearningListBinding? = null
@@ -52,12 +53,10 @@ class LearningListFragment : Fragment() {
                     )
                     true
                 }
-
                 R.id.action_toggle_theme -> {
                     themeViewModel.toggleNightMode()
                     true
                 }
-
                 else -> false
             }
         }
@@ -69,13 +68,24 @@ class LearningListFragment : Fragment() {
 
         adapter = LearningListAdapter(
             onItemClick = { openDetail(it) },
-            onToggleStatus = { viewModel.toggleStatus(it) }
+            onToggleStatus = { viewModel.toggleStatus(it) },
+            onAddToQueue = { viewModel.addToQueue(it) }
         )
+
         val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerView.adapter = adapter
 
-        binding.statusChips.setOnCheckedStateChangeListener { _, checkedIds ->
+        // ⬇️ Safe-call because createLearningItem is nullable in some layout variants
+        binding.createLearningItem?.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_learningListFragment_to_learningEditFragment,
+                Bundle().apply { putLong("itemId", 0L) }
+            )
+        }
+
+        // ⬇️ Guard optional views that may not exist in every layout
+        binding.statusChips?.setOnCheckedStateChangeListener { _, checkedIds ->
             val status = when (checkedIds.firstOrNull()) {
                 R.id.chipTodo -> LearningStatus.TODO
                 R.id.chipDoing -> LearningStatus.IN_PROGRESS
@@ -85,7 +95,7 @@ class LearningListFragment : Fragment() {
             viewModel.setStatusFilter(status)
         }
 
-        binding.tagGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+        binding.tagGroup?.setOnCheckedStateChangeListener { group, checkedIds ->
             val tag = checkedIds.firstOrNull()?.let { id ->
                 group.findViewById<View>(id)?.tag as? String
             }
@@ -98,29 +108,39 @@ class LearningListFragment : Fragment() {
         }
 
         viewModel.availableTags.observe(viewLifecycleOwner) { tags ->
-            val previousSelection = binding.tagGroup.checkedChipId.takeIf { it != View.NO_ID }?.let { id ->
-                binding.tagGroup.findViewById<View>(id)?.tag as? String
+            val tagGroup = binding.tagGroup
+            if (tagGroup == null) {
+                // Layout without tag group — still keep filter state sane.
+                if (tags.isEmpty()) viewModel.setTagFilter(null)
+                return@observe
             }
-            binding.tagGroup.removeAllViews()
+
+            val previousSelection = tagGroup.checkedChipId
+                .takeIf { it != View.NO_ID }
+                ?.let { id -> tagGroup.findViewById<View>(id)?.tag as? String }
+
+            tagGroup.removeAllViews()
             tags.forEach { tag ->
-                val chip = layoutInflater.inflate(R.layout.view_filter_chip, binding.tagGroup, false)
-                chip.tag = tag
-                if (chip is com.google.android.material.chip.Chip) {
-                    chip.id = View.generateViewId()
-                    chip.text = tag
+                val chipView = layoutInflater.inflate(R.layout.view_filter_chip, tagGroup, false)
+                chipView.tag = tag
+                if (chipView is Chip) {
+                    chipView.id = View.generateViewId()
+                    chipView.text = tag
                     if (previousSelection != null && tag.equals(previousSelection, ignoreCase = true)) {
-                        chip.isChecked = true
+                        chipView.isChecked = true
                     }
                 }
-                binding.tagGroup.addView(chip)
+                tagGroup.addView(chipView)
             }
-            binding.tagHeader.isVisible = tags.isNotEmpty()
-            binding.tagGroup.isVisible = tags.isNotEmpty()
+
+            binding.tagHeader?.isVisible = tags.isNotEmpty()
+            tagGroup.isVisible = tags.isNotEmpty()
+
             if (previousSelection != null && tags.none { it.equals(previousSelection, ignoreCase = true) }) {
                 viewModel.setTagFilter(null)
             }
             if (tags.isEmpty()) {
-                binding.tagGroup.clearCheck()
+                tagGroup.clearCheck()
                 viewModel.setTagFilter(null)
             }
         }

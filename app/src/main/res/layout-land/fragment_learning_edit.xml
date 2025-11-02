@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
@@ -53,25 +54,6 @@
                             android:layout_height="wrap_content"
                             android:backgroundTint="@android:color/transparent"
                             android:inputType="textCapSentences" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/urlInput"
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:hint="@string/field_url"
-                        app:boxBackgroundColor="@color/glass_surface_alt"
-                        app:boxStrokeColor="@color/glass_stroke"
-                        app:boxStrokeWidth="1dp"
-                        app:boxStrokeWidthFocused="2dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:backgroundTint="@android:color/transparent"
-                            android:inputType="textUri" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
@@ -141,58 +123,58 @@
                         app:selectionRequired="true"
                         app:singleSelection="true">
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/buttonCategoryCourse"
-                            style="@style/Horizon.Button.Segmented"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checkable="true"
-                            android:checked="true"
-                            android:text="@string/category_course"
-                            app:icon="@drawable/ic_school_24"
-                            app:iconGravity="textStart"
-                            app:iconPadding="8dp"
-                            app:iconTint="@color/toggle_button_text" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonCategoryCourse"
+                        style="@style/Horizon.Button.Segmented"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checkable="true"
+                        android:checked="true"
+                        android:text="@string/category_course"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_school_24" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/buttonCategoryVideo"
-                            style="@style/Horizon.Button.Segmented"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checkable="true"
-                            android:text="@string/category_video"
-                            app:icon="@drawable/ic_youtube_24"
-                            app:iconGravity="textStart"
-                            app:iconPadding="8dp"
-                            app:iconTint="@color/toggle_button_text" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonCategoryVideo"
+                        style="@style/Horizon.Button.Segmented"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checkable="true"
+                        android:text="@string/category_video"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_youtube_24" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/buttonCategoryBook"
-                            style="@style/Horizon.Button.Segmented"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checkable="true"
-                            android:text="@string/category_book"
-                            app:icon="@drawable/ic_book_24"
-                            app:iconGravity="textStart"
-                            app:iconPadding="8dp"
-                            app:iconTint="@color/toggle_button_text" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonCategoryBook"
+                        style="@style/Horizon.Button.Segmented"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checkable="true"
+                        android:text="@string/category_book"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_book_24" />
 
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/buttonCategoryPodcast"
-                            style="@style/Horizon.Button.Segmented"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:checkable="true"
-                            android:text="@string/category_podcast"
-                            app:icon="@drawable/ic_podcast_24"
-                            app:iconGravity="textStart"
-                            app:iconPadding="8dp"
-                            app:iconTint="@color/toggle_button_text" />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/buttonCategoryPodcast"
+                        style="@style/Horizon.Button.Segmented"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:checkable="true"
+                        android:text="@string/category_podcast"
+                        app:iconGravity="textStart"
+                        app:iconPadding="8dp"
+                        app:iconTint="@color/toggle_button_text"
+                        tools:icon="@drawable/ic_podcast_24" />
                     </com.google.android.material.button.MaterialButtonToggleGroup>
 
                     <TextView

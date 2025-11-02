@@ -74,5 +74,13 @@
             app:chipSpacingVertical="6dp"
             app:singleLine="false"
             app:singleSelection="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/addToQueueButton"
+            style="@style/Horizon.Button.Secondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/add_to_queue" />
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
