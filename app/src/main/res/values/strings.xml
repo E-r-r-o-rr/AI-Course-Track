@@ -10,7 +10,6 @@
     <string name="empty_list">Nothing saved yet. Add the courses or articles you want to finish.</string>
     <string name="list_meta_format">%1$s • %2$s</string>
     <string name="detail_source_format">Source: %1$s</string>
-    <string name="open_link">Open link</string>
     <string name="notes_hint">Notes and reflections</string>
     <string name="edit_item">Edit</string>
     <string name="delete_item">Delete</string>
@@ -19,13 +18,12 @@
     <string name="create_title">Add learning item</string>
     <string name="edit_title">Edit learning item</string>
     <string name="field_title">Title</string>
-    <string name="field_url">URL</string>
     <string name="field_source">Source</string>
     <string name="field_tags">Tags (comma separated)</string>
     <string name="status_label">Status</string>
     <string name="category_label">Type</string>
     <string name="save">Save</string>
-    <string name="validation_error">Fill out title, link, and source</string>
+    <string name="validation_error">Fill out title and source</string>
     <string name="dashboard_title">Dashboard</string>
     <string name="dashboard_subtitle">Keep momentum going.</string>
     <string name="summary_heading">Progress overview</string>
@@ -64,8 +62,6 @@
     <string name="notification_title">Pick something to learn today</string>
     <string name="notification_body">Open your learning queue and choose one item to finish.</string>
     <string name="notification_channel_name">Learning reminders</string>
-    <string name="no_browser">No app found to open this link.</string>
-    <string name="no_link_available">No link available to open.</string>
     <string name="notes_label">Notes</string>
     <string name="category_course">Course</string>
     <string name="category_video">YouTube Video</string>

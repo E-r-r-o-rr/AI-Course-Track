@@ -1,7 +1,6 @@
 package com.example.automation.ui.detail
 
 import android.content.Context
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -106,8 +105,6 @@ class LearningDetailFragment : Fragment() {
             }
         }
 
-        binding.openButton?.setOnClickListener { handleOpenLink() }
-
         binding.saveChangesButton?.isEnabled = false
         binding.saveChangesButton?.setOnClickListener {
             val noteToSave = pendingNote
@@ -195,7 +192,6 @@ class LearningDetailFragment : Fragment() {
                 binding.tagsGroup.addView(chipView)
             }
             binding.tagsGroup.isVisible = item.tags.isNotEmpty()
-            binding.openButton?.isEnabled = item.url.isNotBlank()
             updateSaveChangesButtonState()
         }
     }
@@ -212,29 +208,6 @@ class LearningDetailFragment : Fragment() {
             .setPositiveButton(android.R.string.ok) { _, _ -> viewModel.deleteItem() }
             .setNegativeButton(android.R.string.cancel, null)
             .show()
-    }
-
-    private fun handleOpenLink() {
-        val url = viewModel.item.value?.url?.takeIf { it.isNotBlank() }
-        if (url.isNullOrBlank()) {
-            Toast.makeText(requireContext(), R.string.no_link_available, Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val parsedUri = android.net.Uri.parse(url)
-        val launchUri = if (parsedUri.scheme.isNullOrEmpty()) {
-            android.net.Uri.parse("https://$url")
-        } else {
-            parsedUri
-        }
-
-        val intent = Intent(Intent.ACTION_VIEW, launchUri)
-        val pm = requireContext().packageManager
-        if (intent.resolveActivity(pm) != null) {
-            startActivity(intent)
-        } else {
-            Toast.makeText(requireContext(), R.string.no_browser, Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun updateSaveChangesButtonState() {

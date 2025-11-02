@@ -73,7 +73,6 @@ class LearningEditFragment : Fragment() {
 
         binding.saveButton.setOnClickListener {
             val title = binding.titleInput.editText?.text?.toString().orEmpty()
-            val url = binding.urlInput.editText?.text?.toString().orEmpty()
             val source = binding.sourceInput.editText?.text?.toString().orEmpty()
             val tags = binding.tagsInput.editText?.text?.toString().orEmpty()
                 .split(",")
@@ -93,16 +92,17 @@ class LearningEditFragment : Fragment() {
                 else -> LearningStatus.TODO
             }
 
-            if (title.isBlank() || url.isBlank() || source.isBlank()) {
+            if (title.isBlank() || source.isBlank()) {
                 Toast.makeText(requireContext(), R.string.validation_error, Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
             val base = currentItem
+            val retainedUrl = base?.url ?: ""
             val item = if (base == null) {
                 LearningItem(
                     title = title,
-                    url = url,
+                    url = retainedUrl,
                     source = source,
                     category = category,
                     tags = tags,
@@ -114,7 +114,7 @@ class LearningEditFragment : Fragment() {
             } else {
                 base.copy(
                     title = title,
-                    url = url,
+                    url = retainedUrl,
                     source = source,
                     category = category,
                     tags = tags,
@@ -136,7 +136,6 @@ class LearningEditFragment : Fragment() {
     private fun populate(item: LearningItem) {
         binding.toolbar.title = getString(R.string.edit_title)
         binding.titleInput.editText?.setText(item.title)
-        binding.urlInput.editText?.setText(item.url)
         binding.sourceInput.editText?.setText(item.source)
         binding.tagsInput.editText?.setText(item.tags.joinToString(", "))
         binding.categoryToggle.check(
