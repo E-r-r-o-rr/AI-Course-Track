@@ -32,7 +32,18 @@ enum class ActionStyle(
         strokeWidthDp = 1
     ),
     QUEUE(R.color.brand_400, android.R.color.white),
-    NEUTRAL(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText)
+    NEUTRAL(
+        R.color.action_neutral_background,
+        R.color.primaryText,
+        R.color.primaryText
+    ),
+    QUEUE_DISABLED(
+        R.color.action_neutral_background,
+        R.color.secondaryText,
+        R.color.secondaryText,
+        R.color.glass_stroke,
+        strokeWidthDp = 1
+    )
 }
 
 fun Chip.applyActionStyle(style: ActionStyle) {
@@ -82,7 +93,7 @@ fun resolveActionStyle(context: Context, label: CharSequence?): ActionStyle {
         context.getString(R.string.complete_learning_item).lowercase() -> ActionStyle.COMPLETE
         context.getString(R.string.remove_from_current).lowercase() -> ActionStyle.REMOVE_FROM_CURRENT
         context.getString(R.string.add_to_queue).lowercase() -> ActionStyle.QUEUE
-        context.getString(R.string.in_queue).lowercase() -> ActionStyle.NEUTRAL
+        context.getString(R.string.in_queue).lowercase() -> ActionStyle.QUEUE_DISABLED
         else -> ActionStyle.NEUTRAL
     }
 }

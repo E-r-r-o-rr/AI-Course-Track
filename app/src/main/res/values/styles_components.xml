@@ -4,6 +4,16 @@
         <item name="android:elevation">0dp</item>
         <item name="titleTextColor">@color/white</item>
         <item name="subtitleTextColor">@color/glass_highlight</item>
+        <item name="navigationIconTint">@color/white</item>
+        <item name="logoTint">@color/white</item>
+        <item name="android:theme">@style/ThemeOverlay.Horizon.Toolbar</item>
+        <item name="popupTheme">@style/ThemeOverlay.Horizon.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.Horizon.Toolbar" parent="ThemeOverlay.Material3.Dark.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/glass_highlight</item>
     </style>
 
     <style name="Horizon.Card" parent="Widget.Material3.CardView.Filled">
