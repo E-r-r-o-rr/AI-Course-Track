@@ -38,6 +38,11 @@ class LearningRepository private constructor(context: Context) {
             items.filter { it.queued && it.status == LearningStatus.TODO }
         }
 
+    fun observeCompletedItems(): Flow<List<LearningItem>> =
+        dao.observeByStatus(LearningStatus.DONE).map { items ->
+            items.sortedByDescending { it.completedAt ?: it.addedAt }
+        }
+
     suspend fun addToQueue(id: Long) {
         val current = dao.findById(id) ?: return
         dao.update(

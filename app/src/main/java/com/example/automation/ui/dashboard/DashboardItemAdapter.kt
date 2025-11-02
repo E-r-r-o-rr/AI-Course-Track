@@ -68,6 +68,7 @@ class DashboardItemAdapter(
             primaryAction.applyAction(item, actions.primary)
             secondaryAction.applyAction(item, actions.secondary)
             tertiaryAction.applyAction(item, actions.tertiary)
+            actionRow.isVisible = listOfNotNull(actions.primary, actions.secondary, actions.tertiary).isNotEmpty()
         }
     }
 

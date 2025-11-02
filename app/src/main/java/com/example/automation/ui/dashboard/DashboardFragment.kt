@@ -28,6 +28,7 @@ class DashboardFragment : Fragment() {
     private lateinit var themeViewModel: ThemeViewModel
     private lateinit var currentTaskAdapter: DashboardItemAdapter
     private lateinit var queuedAdapter: DashboardItemAdapter
+    private lateinit var completedAdapter: DashboardItemAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -114,6 +115,23 @@ class DashboardFragment : Fragment() {
             isNestedScrollingEnabled = false
         }
 
+        completedAdapter = DashboardItemAdapter(
+            onClick = { item ->
+                findNavController().navigate(
+                    R.id.action_dashboardFragment_to_learningDetailFragment,
+                    Bundle().apply { putLong("itemId", item.id) }
+                )
+            },
+            actionsProvider = {
+                DashboardItemActions()
+            }
+        )
+        binding.completedList?.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = completedAdapter
+            isNestedScrollingEnabled = false
+        }
+
         val weeklyGoalViews = listOfNotNull(
             binding.weeklyGoalCircle1,
             binding.weeklyGoalCircle2,
@@ -151,6 +169,15 @@ class DashboardFragment : Fragment() {
         viewModel.queuedItems.observe(viewLifecycleOwner) { list ->
             queuedAdapter.submitList(list)
             binding.emptyQueued?.visibility = if (list.isEmpty()) View.VISIBLE else View.GONE
+        }
+
+        viewModel.completedItems.observe(viewLifecycleOwner) { list ->
+            completedAdapter.submitList(list)
+            val hasCompleted = list.isNotEmpty()
+            binding.completedDivider?.visibility = View.VISIBLE
+            binding.completedHeader?.visibility = View.VISIBLE
+            binding.completedList?.visibility = if (hasCompleted) View.VISIBLE else View.GONE
+            binding.emptyCompleted?.visibility = if (hasCompleted) View.GONE else View.VISIBLE
         }
 
         binding.viewLibraryButton?.let { button ->

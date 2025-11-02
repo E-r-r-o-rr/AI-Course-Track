@@ -120,6 +120,7 @@ class DashboardViewModel(private val repository: LearningRepository) : ViewModel
     val summary = repository.observeSummary().asLiveData()
     val currentTasks = repository.observeCurrentTasks().asLiveData()
     val queuedItems = repository.observeQueuedItems().asLiveData()
+    val completedItems = repository.observeCompletedItems().asLiveData()
 
     fun startItem(item: LearningItem) {
         viewModelScope.launch(Dispatchers.IO) { repository.startItem(item.id) }

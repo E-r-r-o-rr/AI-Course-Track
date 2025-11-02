@@ -45,6 +45,8 @@
     <string name="empty_current_task">Nothing is in progress. Start something from your queue.</string>
     <string name="queued_learning_items">Queued learning items</string>
     <string name="empty_queued_items">Add items from the library to build your queue.</string>
+    <string name="completed_learning_items">Completed learning items</string>
+    <string name="empty_completed_items">Complete a task to see it here.</string>
     <string name="create_learning_item">Create learning item</string>
     <string name="add_to_queue">Add to queue</string>
     <string name="in_queue">In queue</string>

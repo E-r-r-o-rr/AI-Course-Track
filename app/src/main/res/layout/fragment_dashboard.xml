@@ -338,6 +338,47 @@
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                         android:textColor="@color/secondaryText"
                         android:visibility="gone" />
+
+                    <View
+                        android:id="@+id/completedDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/glass_stroke"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/completedHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/completed_learning_items"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                        android:textColor="@color/primaryText"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/completedList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingBottom="12dp"
+                        android:paddingTop="4dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/emptyCompleted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="@string/empty_completed_items"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textColor="@color/secondaryText"
+                        android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
