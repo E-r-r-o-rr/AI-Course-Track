@@ -91,8 +91,12 @@ class LearningDetailViewModel(private val repository: LearningRepository) : View
         viewModelScope.launch(Dispatchers.IO) { repository.updateNote(id, note) }
     }
 
-    fun saveChanges(note: String) {
-        updateNote(note)
+    fun saveChanges(note: String, status: LearningStatus) {
+        val id = itemId.value ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateNote(id, note)
+            repository.updateStatus(id, status)
+        }
     }
 
     fun updateStatus(status: LearningStatus) {

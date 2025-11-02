@@ -38,6 +38,9 @@ class LearningDetailFragment : Fragment() {
     private var originalNote: String = ""
     private var pendingNote: String = ""
     private var isProgrammaticNoteUpdate = false
+    private var originalStatus: LearningStatus? = null
+    private var pendingStatus: LearningStatus? = null
+    private var isProgrammaticStatusUpdate = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -90,16 +93,16 @@ class LearningDetailFragment : Fragment() {
         }
 
         binding.statusToggle.addOnButtonCheckedListener { _, checkedId, isChecked ->
-            if (!isChecked) return@addOnButtonCheckedListener
+            if (!isChecked || isProgrammaticStatusUpdate) return@addOnButtonCheckedListener
             val status = when (checkedId) {
                 R.id.buttonTodo -> LearningStatus.TODO
                 R.id.buttonDoing -> LearningStatus.IN_PROGRESS
                 R.id.buttonDone -> LearningStatus.DONE
                 else -> null
             }
-            val current = viewModel.item.value?.status
-            if (status != null && status != current) {
-                viewModel.updateStatus(status)
+            if (status != null) {
+                pendingStatus = status
+                updateSaveChangesButtonState()
             }
         }
 
@@ -108,8 +111,16 @@ class LearningDetailFragment : Fragment() {
         binding.saveChangesButton?.isEnabled = false
         binding.saveChangesButton?.setOnClickListener {
             val noteToSave = pendingNote
-            viewModel.saveChanges(noteToSave)
+            val statusToSave = pendingStatus ?: originalStatus ?: viewModel.item.value?.status
+            if (statusToSave != null) {
+                viewModel.saveChanges(noteToSave, statusToSave)
+                originalStatus = statusToSave
+                pendingStatus = statusToSave
+            } else {
+                viewModel.updateNote(noteToSave)
+            }
             originalNote = noteToSave
+            pendingNote = noteToSave
             binding.saveChangesButton?.isEnabled = false
             Toast.makeText(requireContext(), R.string.changes_saved, Toast.LENGTH_SHORT).show()
         }
@@ -117,7 +128,7 @@ class LearningDetailFragment : Fragment() {
         binding.notesEdit.doAfterTextChanged { text ->
             if (isProgrammaticNoteUpdate) return@doAfterTextChanged
             pendingNote = text?.toString().orEmpty()
-            binding.saveChangesButton?.isEnabled = pendingNote != originalNote
+            updateSaveChangesButtonState()
         }
 
         viewModel.item.observe(viewLifecycleOwner) { item ->
@@ -139,13 +150,25 @@ class LearningDetailFragment : Fragment() {
             )
             binding.source.text = getString(R.string.detail_source_format, item.source)
             binding.source.isVisible = item.source.isNotBlank()
-            binding.statusToggle.check(
-                when (item.status) {
-                    LearningStatus.TODO -> R.id.buttonTodo
-                    LearningStatus.IN_PROGRESS -> R.id.buttonDoing
-                    LearningStatus.DONE -> R.id.buttonDone
+            val persistedStatus = item.status
+            val hasPendingStatusChange = pendingStatus != null && pendingStatus != persistedStatus
+            originalStatus = persistedStatus
+            if (!hasPendingStatusChange) {
+                pendingStatus = persistedStatus
+                val desiredId = persistedStatus.toButtonId()
+                if (binding.statusToggle.checkedButtonId != desiredId) {
+                    isProgrammaticStatusUpdate = true
+                    binding.statusToggle.check(desiredId)
+                    isProgrammaticStatusUpdate = false
                 }
-            )
+            } else {
+                val desiredId = pendingStatus?.toButtonId()
+                if (desiredId != null && binding.statusToggle.checkedButtonId != desiredId) {
+                    isProgrammaticStatusUpdate = true
+                    binding.statusToggle.check(desiredId)
+                    isProgrammaticStatusUpdate = false
+                }
+            }
 
             val note = item.note
             val hasPendingNoteChanges = pendingNote != originalNote
@@ -159,9 +182,6 @@ class LearningDetailFragment : Fragment() {
             if (!hasPendingNoteChanges) {
                 originalNote = note
                 pendingNote = note
-                binding.saveChangesButton?.isEnabled = false
-            } else {
-                binding.saveChangesButton?.isEnabled = pendingNote != originalNote
             }
 
             binding.tagsGroup.removeAllViews()
@@ -176,6 +196,7 @@ class LearningDetailFragment : Fragment() {
             }
             binding.tagsGroup.isVisible = item.tags.isNotEmpty()
             binding.openButton?.isEnabled = item.url.isNotBlank()
+            updateSaveChangesButtonState()
         }
     }
 
@@ -214,5 +235,17 @@ class LearningDetailFragment : Fragment() {
         } else {
             Toast.makeText(requireContext(), R.string.no_browser, Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun updateSaveChangesButtonState() {
+        val statusChanged = pendingStatus != null && originalStatus != null && pendingStatus != originalStatus
+        val noteChanged = pendingNote != originalNote
+        binding.saveChangesButton?.isEnabled = statusChanged || noteChanged
+    }
+
+    private fun LearningStatus.toButtonId(): Int = when (this) {
+        LearningStatus.TODO -> R.id.buttonTodo
+        LearningStatus.IN_PROGRESS -> R.id.buttonDoing
+        LearningStatus.DONE -> R.id.buttonDone
     }
 }
