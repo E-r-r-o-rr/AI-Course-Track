@@ -28,16 +28,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
+        <ImageButton
             android:id="@+id/deleteButton"
-            style="@style/Widget.Material3.Button.Icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:contentDescription="@string/delete_learning_item"
             android:visibility="gone"
-            app:backgroundTint="@color/action_destructive"
-            app:icon="@drawable/ic_delete_24"
-            app:iconTint="@android:color/white"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:scaleType="center"
+            android:src="@drawable/ic_delete_24"
+            android:tint="@color/action_destructive"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -93,11 +94,11 @@
             android:visibility="gone"
             app:chipSpacingHorizontal="8dp"
             app:chipSpacingVertical="8dp"
-            app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/textBarrier"
             app:layout_goneMarginTop="0dp"
-            app:singleLine="false"
+            app:singleLine="true"
             app:singleSelection="false">
 
             <com.google.android.material.chip.Chip

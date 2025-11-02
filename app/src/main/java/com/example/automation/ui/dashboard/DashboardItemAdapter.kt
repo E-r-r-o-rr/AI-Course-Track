@@ -1,5 +1,6 @@
 package com.example.automation.ui.dashboard
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -101,13 +102,13 @@ class DashboardItemAdapter(
             deleteButton.isVisible = deleteAction != null
             if (deleteAction != null) {
                 deleteButton.isEnabled = true
-                deleteButton.applyActionStyle(deleteAction.style)
                 val deleteIcon = deleteAction.iconRes?.let { iconRes ->
                     ResourcesCompat.getDrawable(holder.itemView.resources, iconRes, holder.itemView.context.theme)
                 }
-                if (deleteIcon != null) {
-                    deleteButton.icon = deleteIcon
-                }
+                deleteButton.setImageDrawable(deleteIcon)
+                deleteButton.imageTintList = ColorStateList.valueOf(
+                    ContextCompat.getColor(holder.itemView.context, R.color.action_destructive)
+                )
                 val deleteContentDescription = deleteAction.contentDescription
                     ?: deleteAction.contentDescriptionRes?.let { holder.itemView.context.getString(it) }
                     ?: deleteAction.text?.toString()
@@ -118,6 +119,7 @@ class DashboardItemAdapter(
                 deleteButton.setOnClickListener { deleteAction.onClick(item) }
             } else {
                 deleteButton.isEnabled = false
+                deleteButton.setImageDrawable(null)
                 deleteButton.setOnClickListener(null)
             }
         }
