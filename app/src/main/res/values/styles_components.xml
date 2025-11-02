@@ -5,7 +5,6 @@
         <item name="titleTextColor">@color/white</item>
         <item name="subtitleTextColor">@color/glass_highlight</item>
         <item name="navigationIconTint">@color/white</item>
-        <item name="logoTint">@color/white</item>
         <item name="android:theme">@style/ThemeOverlay.Horizon.Toolbar</item>
         <item name="popupTheme">@style/ThemeOverlay.Horizon.Toolbar</item>
     </style>
