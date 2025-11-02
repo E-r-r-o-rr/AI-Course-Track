@@ -34,17 +34,20 @@ class AppViewModelFactory(private val app: Application) : ViewModelProvider.Fact
 
 class LearningListViewModel(private val repository: LearningRepository) : ViewModel() {
     private val statusFilter = MutableStateFlow<LearningStatus?>(null)
-    private val tagQuery = MutableStateFlow("")
+    private val searchQuery = MutableStateFlow("")
 
     private val combined = combine(
         repository.observeItems(),
         statusFilter,
-        tagQuery
+        searchQuery
     ) { items, status, query ->
         val trimmedQuery = query.trim()
         items.filter { item ->
-            (status == null || item.status == status) &&
-                (trimmedQuery.isBlank() || item.tags.any { it.contains(trimmedQuery, ignoreCase = true) })
+            val matchesStatus = status == null || item.status == status
+            val matchesQuery = trimmedQuery.isBlank() ||
+                item.title.contains(trimmedQuery, ignoreCase = true) ||
+                item.tags.any { it.contains(trimmedQuery, ignoreCase = true) }
+            matchesStatus && matchesQuery
         }
     }
 
@@ -55,8 +58,8 @@ class LearningListViewModel(private val repository: LearningRepository) : ViewMo
         statusFilter.value = status
     }
 
-    fun setTagQuery(query: String?) {
-        tagQuery.value = query?.trim().orEmpty()
+    fun setSearchQuery(query: String?) {
+        searchQuery.value = query?.trim().orEmpty()
     }
 
     fun toggleStatus(item: LearningItem) {

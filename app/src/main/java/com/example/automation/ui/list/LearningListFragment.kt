@@ -90,26 +90,35 @@ class LearningListFragment : Fragment() {
             viewModel.setStatusFilter(status)
         }
 
+        var hasAnyTags = false
+        var hasVisibleItems = false
+
+        fun updateSearchVisibility() {
+            val searchLayout = binding.tagSearchLayout ?: return
+            val searchInput = binding.tagSearchInput
+            val hasQuery = !searchInput?.text.isNullOrBlank()
+            val shouldShow = hasAnyTags || hasVisibleItems || hasQuery
+            searchLayout.isVisible = shouldShow
+            if (!shouldShow && hasQuery) {
+                searchInput?.setText("")
+            }
+        }
+
         binding.tagSearchInput?.addTextChangedListener { editable ->
-            viewModel.setTagQuery(editable?.toString())
+            viewModel.setSearchQuery(editable?.toString())
+            updateSearchVisibility()
         }
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
+            hasVisibleItems = items.isNotEmpty()
             binding.emptyState.isVisible = items.isEmpty()
             adapter.submitList(items)
+            updateSearchVisibility()
         }
 
         viewModel.availableTags.observe(viewLifecycleOwner) { tags ->
-            val searchLayout = binding.tagSearchLayout
-            val searchInput = binding.tagSearchInput
-            val hasTags = tags.isNotEmpty()
-            searchLayout?.isVisible = hasTags
-            if (!hasTags) {
-                if (!searchInput?.text.isNullOrBlank()) {
-                    searchInput?.setText("")
-                }
-                viewModel.setTagQuery(null)
-            }
+            hasAnyTags = tags.isNotEmpty()
+            updateSearchVisibility()
         }
     }
 
