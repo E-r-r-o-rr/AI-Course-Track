@@ -100,10 +100,6 @@ class LearningRepository private constructor(context: Context) {
         dao.update(item)
     }
 
-    suspend fun deleteItem(item: LearningItem) {
-        dao.deleteById(item.id)
-    }
-
     suspend fun deleteItem(id: Long) {
         dao.deleteById(id)
     }

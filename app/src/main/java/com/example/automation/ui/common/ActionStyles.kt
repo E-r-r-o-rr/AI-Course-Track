@@ -5,7 +5,6 @@ import android.content.res.ColorStateList
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import com.example.automation.R
-import com.google.android.material.button.MaterialButton
 import com.google.android.material.chip.Chip
 
 enum class ActionStyle(
@@ -60,29 +59,10 @@ fun Chip.applyActionStyle(style: ActionStyle) {
     chipIconTint = ColorStateList.valueOf(ContextCompat.getColor(context, style.iconTintRes))
 }
 
-fun MaterialButton.applyActionStyle(style: ActionStyle) {
-    val context = context
-    backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, style.backgroundColorRes))
-    setTextColor(ContextCompat.getColor(context, style.textColorRes))
-    if (style.strokeWidthDp > 0 && style.strokeColorRes != null) {
-        strokeWidth = style.strokeWidthDp.dpToPxInt(context)
-        strokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, style.strokeColorRes))
-    } else {
-        strokeWidth = 0
-        strokeColor = null
-    }
-}
-
 private fun Int.dpToPx(context: Context): Float {
     if (this <= 0) return 0f
     val px = this * context.resources.displayMetrics.density
     return if (px < 1f) 1f else px
-}
-
-private fun Int.dpToPxInt(context: Context): Int {
-    if (this <= 0) return 0
-    val px = this * context.resources.displayMetrics.density
-    return if (px < 1f) 1 else px.toInt()
 }
 
 fun resolveActionStyle(context: Context, label: CharSequence?): ActionStyle {
@@ -102,6 +82,3 @@ fun Chip.applyActionStyleByLabel(label: CharSequence?) {
     applyActionStyle(resolveActionStyle(context, label))
 }
 
-fun MaterialButton.applyActionStyleByLabel(label: CharSequence?) {
-    applyActionStyle(resolveActionStyle(context, label))
-}

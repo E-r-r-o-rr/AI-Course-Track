@@ -1,7 +1,6 @@
 package com.example.automation.data.db
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
@@ -19,9 +18,6 @@ interface LearningItemDao {
 
     @Update
     suspend fun update(item: LearningItem)
-
-    @Delete
-    suspend fun delete(item: LearningItem)
 
     @Query("DELETE FROM learning_items WHERE id = :id")
     suspend fun deleteById(id: Long)
