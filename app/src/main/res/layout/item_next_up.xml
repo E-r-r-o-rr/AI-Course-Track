@@ -70,16 +70,22 @@
             <com.google.android.material.chip.Chip
                 android:id="@+id/primaryAction"
                 style="@style/Horizon.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/secondaryAction"
                 style="@style/Horizon.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:visibility="gone" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/tertiaryAction"
                 style="@style/Horizon.Chip.Action"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:visibility="gone" />
         </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
