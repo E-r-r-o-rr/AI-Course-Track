@@ -47,10 +47,7 @@ class LearningListFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_add -> {
-                    findNavController().navigate(
-                        R.id.action_learningListFragment_to_learningEditFragment,
-                        Bundle().apply { putLong("itemId", 0L) }
-                    )
+                    openCreateForm()
                     true
                 }
                 R.id.action_toggle_theme -> {
@@ -69,7 +66,8 @@ class LearningListFragment : Fragment() {
         adapter = LearningListAdapter(
             onItemClick = { openDetail(it) },
             onToggleStatus = { viewModel.toggleStatus(it) },
-            onAddToQueue = { viewModel.addToQueue(it) }
+            onAddToQueue = { viewModel.addToQueue(it) },
+            onDelete = { viewModel.deleteItem(it) }
         )
 
         val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
@@ -77,12 +75,9 @@ class LearningListFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         // ⬇️ Safe-call because createLearningItem is nullable in some layout variants
-        binding.createLearningItem?.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_learningListFragment_to_learningEditFragment,
-                Bundle().apply { putLong("itemId", 0L) }
-            )
-        }
+        binding.createLearningItem?.setOnClickListener { openCreateForm() }
+
+        binding.emptyCreateButton?.setOnClickListener { openCreateForm() }
 
         // ⬇️ Guard optional views that may not exist in every layout
         binding.statusChips?.setOnCheckedStateChangeListener { _, checkedIds ->
@@ -149,6 +144,13 @@ class LearningListFragment : Fragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    private fun openCreateForm() {
+        findNavController().navigate(
+            R.id.action_learningListFragment_to_learningEditFragment,
+            Bundle().apply { putLong("itemId", 0L) }
+        )
     }
 
     private fun openDetail(item: LearningItem) {

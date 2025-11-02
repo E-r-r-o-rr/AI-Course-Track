@@ -74,6 +74,12 @@ class LearningListViewModel(private val repository: LearningRepository) : ViewMo
             repository.addToQueue(item.id)
         }
     }
+
+    fun deleteItem(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteItem(item.id)
+        }
+    }
 }
 
 class LearningDetailViewModel(private val repository: LearningRepository) : ViewModel() {

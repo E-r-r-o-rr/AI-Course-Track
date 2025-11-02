@@ -20,7 +20,8 @@ import com.example.automation.ui.common.applyActionStyleByLabel
 class LearningListAdapter(
     private val onItemClick: (LearningItem) -> Unit,
     private val onToggleStatus: (LearningItem) -> Unit,
-    private val onAddToQueue: (LearningItem) -> Unit
+    private val onAddToQueue: (LearningItem) -> Unit,
+    private val onDelete: (LearningItem) -> Unit
 ) : ListAdapter<LearningItem, LearningListAdapter.ViewHolder>(Diff) {
 
     object Diff : DiffUtil.ItemCallback<LearningItem>() {
@@ -93,6 +94,7 @@ class LearningListAdapter(
             addToQueueButton.isEnabled = !item.queued
             addToQueueButton.setOnClickListener { onAddToQueue(item) }
             addToQueueButton.applyActionStyleByLabel(addToQueueButton.text)
+            deleteButton.setOnClickListener { onDelete(item) }
         }
     }
 }
