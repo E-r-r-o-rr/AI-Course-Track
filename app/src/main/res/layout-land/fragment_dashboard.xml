@@ -178,6 +178,67 @@
                                 android:textColor="@color/primaryText" />
                         </LinearLayout>
                     </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/weeklyGoalTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="24dp"
+                        android:text="@string/weekly_goal_title"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textColor="@color/primaryText" />
+
+                    <TextView
+                        android:id="@+id/weeklyGoalSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="@string/weekly_goal_subtitle"
+                        android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                        android:textColor="@color/secondaryText" />
+
+                    <LinearLayout
+                        android:id="@+id/weeklyGoalContainer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:id="@+id/weeklyGoalCircle1"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:background="@drawable/bg_weekly_goal_circle_empty" />
+
+                        <View
+                            android:id="@+id/weeklyGoalCircle2"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_weekly_goal_circle_empty" />
+
+                        <View
+                            android:id="@+id/weeklyGoalCircle3"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_weekly_goal_circle_empty" />
+
+                        <View
+                            android:id="@+id/weeklyGoalCircle4"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_weekly_goal_circle_empty" />
+
+                        <View
+                            android:id="@+id/weeklyGoalCircle5"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginStart="8dp"
+                            android:background="@drawable/bg_weekly_goal_circle_empty" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -206,7 +267,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="@string/next_up"
+                            android:text="@string/current_learning_task"
                             android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
                             android:textColor="@color/primaryText" />
 
@@ -225,7 +286,7 @@
                         android:background="@color/glass_stroke" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/nextUpList"
+                        android:id="@+id/currentTaskList"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
@@ -235,13 +296,91 @@
                         android:paddingBottom="12dp" />
 
                     <TextView
-                        android:id="@+id/emptyNextUp"
+                        android:id="@+id/emptyCurrentTask"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="12dp"
                         android:gravity="center"
                         android:padding="16dp"
-                        android:text="@string/empty_next_up"
+                        android:text="@string/empty_current_task"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textColor="@color/secondaryText"
+                        android:visibility="gone" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/glass_stroke" />
+
+                    <TextView
+                        android:id="@+id/queuedHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/queued_learning_items"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                        android:textColor="@color/primaryText" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/queuedList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="12dp" />
+
+                    <TextView
+                        android:id="@+id/emptyQueued"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="@string/empty_queued_items"
+                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                        android:textColor="@color/secondaryText"
+                        android:visibility="gone" />
+
+                    <View
+                        android:id="@+id/completedDivider"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="@color/glass_stroke"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/completedHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/completed_learning_items"
+                        android:textAppearance="@style/TextAppearance.Material3.TitleSmall"
+                        android:textColor="@color/primaryText"
+                        android:visibility="gone" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/completedList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:paddingTop="4dp"
+                        android:paddingBottom="12dp"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/emptyCompleted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="@string/empty_completed_items"
                         android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
                         android:textColor="@color/secondaryText"
                         android:visibility="gone" />
