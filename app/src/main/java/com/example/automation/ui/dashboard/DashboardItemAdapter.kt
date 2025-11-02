@@ -1,6 +1,5 @@
 package com.example.automation.ui.dashboard
 
-import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.DrawableRes
@@ -14,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.automation.R
 import com.example.automation.databinding.ItemNextUpBinding
 import com.example.automation.model.LearningItem
+import com.example.automation.model.LearningStatus
 import com.example.automation.ui.category.iconRes
 import com.example.automation.ui.category.labelRes
 import com.example.automation.ui.category.tintRes
+import com.example.automation.ui.common.ActionStyle
+import com.example.automation.ui.common.applyActionStyle
 import com.google.android.material.chip.Chip
 
 class DashboardItemAdapter(
@@ -54,8 +56,8 @@ class DashboardItemAdapter(
             }
             categoryIcon.setImageResource(item.category.iconRes())
             val tintColor = ContextCompat.getColor(holder.itemView.context, item.category.tintRes())
-            categoryIcon.backgroundTintList = ColorStateList.valueOf(tintColor)
-            categoryIcon.imageTintList = ColorStateList.valueOf(
+            categoryIcon.backgroundTintList = android.content.res.ColorStateList.valueOf(tintColor)
+            categoryIcon.imageTintList = android.content.res.ColorStateList.valueOf(
                 ContextCompat.getColor(holder.itemView.context, android.R.color.white)
             )
             categoryIcon.contentDescription = holder.itemView.context.getString(
@@ -63,6 +65,28 @@ class DashboardItemAdapter(
                 categoryLabel
             )
             root.setOnClickListener { onClick(item) }
+
+            statusChip.isVisible = true
+            statusChip.text = when (item.status) {
+                LearningStatus.TODO -> holder.itemView.context.getString(R.string.status_todo)
+                LearningStatus.IN_PROGRESS -> holder.itemView.context.getString(R.string.status_in_progress)
+                LearningStatus.DONE -> holder.itemView.context.getString(R.string.status_done)
+            }
+            val statusColorRes = when (item.status) {
+                LearningStatus.TODO -> R.color.statusTodo
+                LearningStatus.IN_PROGRESS -> R.color.statusDoing
+                LearningStatus.DONE -> R.color.statusDone
+            }
+            val statusColor = ContextCompat.getColor(holder.itemView.context, statusColorRes)
+            statusChip.chipBackgroundColor = android.content.res.ColorStateList.valueOf(statusColor)
+            statusChip.setTextColor(ContextCompat.getColor(holder.itemView.context, android.R.color.white))
+            statusChip.isCheckable = false
+            statusChip.isChipIconVisible = false
+            statusChip.isClickable = false
+            statusChip.chipStrokeWidth = 0f
+            statusChip.chipStrokeColor = android.content.res.ColorStateList.valueOf(
+                ContextCompat.getColor(holder.itemView.context, android.R.color.transparent)
+            )
 
             val actions = actionsProvider(item)
             primaryAction.applyAction(item, actions.primary)
@@ -87,12 +111,15 @@ class DashboardItemAdapter(
         isChipIconVisible = false
         if (action.iconRes != null) {
             chipIcon = ResourcesCompat.getDrawable(resources, action.iconRes, context.theme)
-            chipIconTint = ColorStateList.valueOf(
-                ContextCompat.getColor(context, R.color.primaryText)
-            )
             isChipIconVisible = true
         } else {
             chipIcon = null
+        }
+        applyActionStyle(action.style)
+        if (isChipIconVisible) {
+            chipIconTint = android.content.res.ColorStateList.valueOf(
+                ContextCompat.getColor(context, action.style.iconTintRes)
+            )
         }
         contentDescription = action.contentDescription
             ?: action.contentDescriptionRes?.let { context.getString(it) }
@@ -113,5 +140,6 @@ data class DashboardItemAction(
     @DrawableRes val iconRes: Int? = null,
     @StringRes val contentDescriptionRes: Int? = null,
     val contentDescription: CharSequence? = null,
+    val style: ActionStyle = ActionStyle.NEUTRAL,
     val onClick: (LearningItem) -> Unit
 )

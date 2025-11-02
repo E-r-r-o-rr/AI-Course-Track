@@ -15,6 +15,7 @@ import com.example.automation.model.LearningStatus
 import com.example.automation.ui.category.iconRes
 import com.example.automation.ui.category.labelRes
 import com.example.automation.ui.category.tintRes
+import com.example.automation.ui.common.applyActionStyleByLabel
 
 class LearningListAdapter(
     private val onItemClick: (LearningItem) -> Unit,
@@ -91,6 +92,7 @@ class LearningListAdapter(
             }
             addToQueueButton.isEnabled = !item.queued
             addToQueueButton.setOnClickListener { onAddToQueue(item) }
+            addToQueueButton.applyActionStyleByLabel(addToQueueButton.text)
         }
     }
 }

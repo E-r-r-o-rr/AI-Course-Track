@@ -16,6 +16,7 @@ import com.example.automation.databinding.FragmentDashboardBinding
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.DashboardViewModel
 import com.example.automation.ui.ThemeViewModel
+import com.example.automation.ui.common.ActionStyle
 import com.example.automation.ui.theme.updateThemeMenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigationrail.NavigationRailView
@@ -70,14 +71,17 @@ class DashboardFragment : Fragment() {
                 DashboardItemActions(
                     primary = DashboardItemAction(
                         textRes = R.string.complete_learning_item,
+                        style = ActionStyle.COMPLETE,
                         onClick = { viewModel.completeItem(it) }
                     ),
                     secondary = DashboardItemAction(
                         textRes = R.string.remove_from_current,
+                        style = ActionStyle.REMOVE_FROM_CURRENT,
                         onClick = { viewModel.moveToQueue(it) }
                     ),
                     tertiary = DashboardItemAction(
                         textRes = R.string.delete_learning_item,
+                        style = ActionStyle.DELETE,
                         onClick = { viewModel.removeFromQueue(it) }
                     )
                 )
@@ -100,10 +104,12 @@ class DashboardFragment : Fragment() {
                 DashboardItemActions(
                     primary = DashboardItemAction(
                         textRes = R.string.start_learning_item,
+                        style = ActionStyle.START,
                         onClick = { viewModel.startItem(it) }
                     ),
                     secondary = DashboardItemAction(
                         textRes = R.string.delete_learning_item,
+                        style = ActionStyle.DELETE,
                         onClick = { viewModel.removeFromQueue(it) }
                     )
                 )

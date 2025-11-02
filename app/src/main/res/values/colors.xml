@@ -54,6 +54,11 @@
     <color name="avatarPurple">#845EF7</color>
     <color name="avatarOrange">#FF922B</color>
 
+    <color name="action_positive">@color/statusDone</color>
+    <color name="action_destructive">#E03131</color>
+    <color name="action_move">#4263EB</color>
+    <color name="action_neutral_background">@color/glass_surface_alt</color>
+
     <color name="categoryCourse">#5C7CFA</color>
     <color name="categoryVideo">#FF6B6B</color>
     <color name="categoryBook">#4ECDC4</color>
