@@ -16,18 +16,12 @@ enum class ActionStyle(
     val strokeWidthDp: Int = 0
 ) {
     START(
-        R.color.action_neutral_background,
-        R.color.primaryText,
-        R.color.primaryText,
-        R.color.glass_chip_stroke,
-        strokeWidthDp = 1
+        R.color.brand_400,
+        android.R.color.white
     ),
     COMPLETE(
-        R.color.action_neutral_background,
-        R.color.primaryText,
-        R.color.primaryText,
-        R.color.glass_chip_stroke,
-        strokeWidthDp = 1
+        R.color.brand_400,
+        android.R.color.white
     ),
     DELETE(R.color.action_destructive, android.R.color.white),
     REMOVE_FROM_CURRENT(
