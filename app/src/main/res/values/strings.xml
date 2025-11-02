@@ -6,7 +6,7 @@
     <string name="status_in_progress">In Progress</string>
     <string name="status_done">Done</string>
     <string name="status_all">All</string>
-    <string name="filter_by_tag">Filter by tag</string>
+    <string name="search_tags_hint">Search tags</string>
     <string name="empty_list">Nothing saved yet. Add the courses or articles you want to finish.</string>
     <string name="list_meta_format">%1$s • %2$s</string>
     <string name="detail_source_format">Source: %1$s</string>

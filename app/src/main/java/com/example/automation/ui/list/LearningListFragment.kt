@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -20,7 +21,6 @@ import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningListViewModel
 import com.example.automation.ui.ThemeViewModel
 import com.example.automation.ui.theme.updateThemeMenuItem
-import com.google.android.material.chip.Chip
 
 class LearningListFragment : Fragment() {
     private var _binding: FragmentLearningListBinding? = null
@@ -90,11 +90,8 @@ class LearningListFragment : Fragment() {
             viewModel.setStatusFilter(status)
         }
 
-        binding.tagGroup?.setOnCheckedStateChangeListener { group, checkedIds ->
-            val tag = checkedIds.firstOrNull()?.let { id ->
-                group.findViewById<View>(id)?.tag as? String
-            }
-            viewModel.setTagFilter(tag)
+        binding.tagSearchInput?.addTextChangedListener { editable ->
+            viewModel.setTagQuery(editable?.toString())
         }
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
@@ -103,40 +100,15 @@ class LearningListFragment : Fragment() {
         }
 
         viewModel.availableTags.observe(viewLifecycleOwner) { tags ->
-            val tagGroup = binding.tagGroup
-            if (tagGroup == null) {
-                // Layout without tag group — still keep filter state sane.
-                if (tags.isEmpty()) viewModel.setTagFilter(null)
-                return@observe
-            }
-
-            val previousSelection = tagGroup.checkedChipId
-                .takeIf { it != View.NO_ID }
-                ?.let { id -> tagGroup.findViewById<View>(id)?.tag as? String }
-
-            tagGroup.removeAllViews()
-            tags.forEach { tag ->
-                val chipView = layoutInflater.inflate(R.layout.view_filter_chip, tagGroup, false)
-                chipView.tag = tag
-                if (chipView is Chip) {
-                    chipView.id = View.generateViewId()
-                    chipView.text = tag
-                    if (previousSelection != null && tag.equals(previousSelection, ignoreCase = true)) {
-                        chipView.isChecked = true
-                    }
+            val searchLayout = binding.tagSearchLayout
+            val searchInput = binding.tagSearchInput
+            val hasTags = tags.isNotEmpty()
+            searchLayout?.isVisible = hasTags
+            if (!hasTags) {
+                if (!searchInput?.text.isNullOrBlank()) {
+                    searchInput?.setText("")
                 }
-                tagGroup.addView(chipView)
-            }
-
-            binding.tagHeader?.isVisible = tags.isNotEmpty()
-            tagGroup.isVisible = tags.isNotEmpty()
-
-            if (previousSelection != null && tags.none { it.equals(previousSelection, ignoreCase = true) }) {
-                viewModel.setTagFilter(null)
-            }
-            if (tags.isEmpty()) {
-                tagGroup.clearCheck()
-                viewModel.setTagFilter(null)
+                viewModel.setTagQuery(null)
             }
         }
     }
