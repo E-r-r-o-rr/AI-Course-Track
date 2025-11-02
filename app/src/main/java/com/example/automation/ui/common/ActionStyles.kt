@@ -13,10 +13,11 @@ enum class ActionStyle(
     @ColorRes val textColorRes: Int,
     @ColorRes val iconTintRes: Int = textColorRes
 ) {
-    START(R.color.action_positive, android.R.color.white),
-    COMPLETE(R.color.action_positive, android.R.color.white),
+    START(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText),
+    COMPLETE(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText),
     DELETE(R.color.action_destructive, android.R.color.white),
-    REMOVE_FROM_CURRENT(R.color.action_move, android.R.color.white),
+    REMOVE_FROM_CURRENT(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText),
+    QUEUE(R.color.brand_500, android.R.color.white),
     NEUTRAL(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText)
 }
 
@@ -44,6 +45,8 @@ fun resolveActionStyle(context: Context, label: CharSequence?): ActionStyle {
         context.getString(R.string.delete_learning_item).lowercase() -> ActionStyle.DELETE
         context.getString(R.string.complete_learning_item).lowercase() -> ActionStyle.COMPLETE
         context.getString(R.string.remove_from_current).lowercase() -> ActionStyle.REMOVE_FROM_CURRENT
+        context.getString(R.string.add_to_queue).lowercase() -> ActionStyle.QUEUE
+        context.getString(R.string.in_queue).lowercase() -> ActionStyle.NEUTRAL
         else -> ActionStyle.NEUTRAL
     }
 }
