@@ -5,20 +5,17 @@
     <color name="brand_600">#3311DB</color>
 
     <!-- Neutrals -->
-    <color name="gray_50">#F5F6FA</color>
     <color name="gray_600">#A3AED0</color>
     <color name="gray_700">#707EAE</color>
     <color name="gray_900">#1B2559</color>
 
     <!-- Navy surfaces -->
-    <color name="navy_700">#1B254B</color>
     <color name="navy_800">#111C44</color>
     <color name="navy_900">#0B1437</color>
 
     <!-- Extras -->
     <color name="light_primary">#F4F7FE</color>
     <color name="dark_primary">#B0BBD5</color>
-    <color name="blue_primary">#2B3674</color>
     <color name="blue_secondary">#4318FF</color>
     <color name="green_primary">#01B574</color>
     <color name="brand_linear">#868CFF</color>
@@ -32,31 +29,20 @@
     <color name="glass_stroke">#C0C9D8FF</color>
     <color name="glass_chip_surface">#E1E8FF</color>
     <color name="glass_chip_stroke">#B6C4FF</color>
-    <color name="glass_toolbar_tint">#F2F5FF</color>
-
     <color name="toolbar_gradient_start">#CC422AFB</color>
     <color name="toolbar_gradient_end">#CC7551FF</color>
     <color name="button_gradient_start">@color/brand_linear</color>
     <color name="button_gradient_end">@color/blue_secondary</color>
 
     <!-- Shadows / misc -->
-    <color name="shadow_500">#147090B0</color> <!-- 0x14 alpha -->
     <color name="white">#FFFFFF</color>
-    <color name="black">#000000</color>
 
     <color name="primaryText">@color/gray_900</color>
     <color name="secondaryText">@color/gray_700</color>
     <color name="statusTodo">#4C6EF5</color>
     <color name="statusDoing">#FF922B</color>
     <color name="statusDone">#2FB344</color>
-    <color name="avatarBlue">#5C7CFA</color>
-    <color name="avatarGreen">#51CF66</color>
-    <color name="avatarPurple">#845EF7</color>
-    <color name="avatarOrange">#FF922B</color>
-
-    <color name="action_positive">@color/statusDone</color>
     <color name="action_destructive">#8F1D1D</color>
-    <color name="action_move">#4263EB</color>
     <color name="action_neutral_background">@color/glass_surface_alt</color>
 
     <color name="categoryCourse">#5C7CFA</color>
@@ -68,7 +54,6 @@
     <color name="md_sys_color_primary">@color/brand_500</color>
     <color name="md_sys_color_onPrimary">@color/white</color>
     <color name="md_sys_color_background">@color/light_primary</color>
-    <color name="md_sys_color_onBackground">@color/gray_900</color>
     <color name="md_sys_color_surface">@color/white</color>
     <color name="md_sys_color_onSurface">@color/gray_900</color>
     <color name="md_sys_color_outline">@color/gray_600</color>
