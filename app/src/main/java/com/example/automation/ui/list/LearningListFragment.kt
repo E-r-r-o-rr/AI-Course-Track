@@ -2,6 +2,7 @@ package com.example.automation.ui.list
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.automation.R
 import com.example.automation.databinding.FragmentLearningListBinding
 import com.example.automation.model.LearningItem
@@ -73,6 +75,11 @@ class LearningListFragment : Fragment() {
         val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerView.adapter = adapter
+
+        if (spanCount > 1) {
+            val spacing = resources.getDimensionPixelSize(R.dimen.library_landscape_item_spacing)
+            binding.recyclerView.addItemDecoration(GridSpacingDecoration(spanCount, spacing))
+        }
 
         // ⬇️ Safe-call because createLearningItem is nullable in some layout variants
         binding.createLearningItem?.setOnClickListener { openCreateForm() }
@@ -139,5 +146,26 @@ class LearningListFragment : Fragment() {
             R.id.action_learningListFragment_to_learningDetailFragment,
             Bundle().apply { putLong("itemId", item.id) }
         )
+    }
+}
+
+private class GridSpacingDecoration(
+    private val spanCount: Int,
+    private val spacing: Int
+) : RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        val position = parent.getChildAdapterPosition(view)
+        if (position == RecyclerView.NO_POSITION) return
+
+        val column = position % spanCount
+
+        outRect.left = spacing * column / spanCount
+        outRect.right = spacing - (column + 1) * spacing / spanCount
+        outRect.bottom = spacing
     }
 }
