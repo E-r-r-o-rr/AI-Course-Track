@@ -99,11 +99,6 @@ class LearningDetailViewModel(private val repository: LearningRepository) : View
         }
     }
 
-    fun updateStatus(status: LearningStatus) {
-        val id = itemId.value ?: return
-        viewModelScope.launch(Dispatchers.IO) { repository.updateStatus(id, status) }
-    }
-
     fun deleteItem() {
         val current = item.value ?: return
         viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(current) }
