@@ -50,9 +50,8 @@
     <string name="in_queue">In queue</string>
     <string name="start_learning_item">Start</string>
     <string name="complete_learning_item">Complete task</string>
-    <string name="move_to_queue">Move to queue</string>
-    <string name="remove_from_queue">Remove from queue</string>
-    <string name="remove_from_queue_content_description">Remove from queue</string>
+    <string name="remove_from_current">Remove from current</string>
+    <string name="delete_learning_item">Delete</string>
     <string name="tab_dashboard">Dashboard</string>
     <string name="tab_library">Library</string>
     <string name="action_toggle_theme">Toggle theme</string>

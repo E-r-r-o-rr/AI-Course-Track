@@ -67,20 +67,20 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/primaryAction"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Horizon.Button.Primary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/secondaryAction"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Horizon.Button.Secondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/tertiaryAction"
-                style="@style/Widget.Material3.Button.TextButton"
+                style="@style/Horizon.Button.Secondary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp" />

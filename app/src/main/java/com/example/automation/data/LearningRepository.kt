@@ -59,7 +59,7 @@ class LearningRepository private constructor(context: Context) {
         dao.update(
             current.copy(
                 status = LearningStatus.IN_PROGRESS,
-                queued = current.queued,
+                queued = false,
                 completedAt = null
             )
         )

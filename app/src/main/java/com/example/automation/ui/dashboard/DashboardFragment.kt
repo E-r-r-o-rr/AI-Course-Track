@@ -72,12 +72,11 @@ class DashboardFragment : Fragment() {
                         onClick = { viewModel.completeItem(it) }
                     ),
                     secondary = DashboardItemAction(
-                        textRes = R.string.move_to_queue,
+                        textRes = R.string.remove_from_current,
                         onClick = { viewModel.moveToQueue(it) }
                     ),
                     tertiary = DashboardItemAction(
-                        textRes = R.string.remove_from_queue,
-                        iconRes = R.drawable.ic_delete_24,
+                        textRes = R.string.delete_learning_item,
                         onClick = { viewModel.removeFromQueue(it) }
                     )
                 )
@@ -103,8 +102,7 @@ class DashboardFragment : Fragment() {
                         onClick = { viewModel.startItem(it) }
                     ),
                     secondary = DashboardItemAction(
-                        iconRes = R.drawable.ic_delete_24,
-                        contentDescriptionRes = R.string.remove_from_queue_content_description,
+                        textRes = R.string.delete_learning_item,
                         onClick = { viewModel.removeFromQueue(it) }
                     )
                 )
