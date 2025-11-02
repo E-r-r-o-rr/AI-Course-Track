@@ -11,13 +11,33 @@ import com.google.android.material.chip.Chip
 enum class ActionStyle(
     @ColorRes val backgroundColorRes: Int,
     @ColorRes val textColorRes: Int,
-    @ColorRes val iconTintRes: Int = textColorRes
+    @ColorRes val iconTintRes: Int = textColorRes,
+    @ColorRes val strokeColorRes: Int? = null,
+    val strokeWidthDp: Int = 0
 ) {
-    START(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText),
-    COMPLETE(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText),
+    START(
+        R.color.action_neutral_background,
+        R.color.primaryText,
+        R.color.primaryText,
+        R.color.glass_chip_stroke,
+        strokeWidthDp = 1
+    ),
+    COMPLETE(
+        R.color.action_neutral_background,
+        R.color.primaryText,
+        R.color.primaryText,
+        R.color.glass_chip_stroke,
+        strokeWidthDp = 1
+    ),
     DELETE(R.color.action_destructive, android.R.color.white),
-    REMOVE_FROM_CURRENT(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText),
-    QUEUE(R.color.brand_500, android.R.color.white),
+    REMOVE_FROM_CURRENT(
+        R.color.action_neutral_background,
+        R.color.primaryText,
+        R.color.primaryText,
+        R.color.glass_chip_stroke,
+        strokeWidthDp = 1
+    ),
+    QUEUE(R.color.brand_400, android.R.color.white),
     NEUTRAL(R.color.action_neutral_background, R.color.primaryText, R.color.primaryText)
 }
 
@@ -25,8 +45,13 @@ fun Chip.applyActionStyle(style: ActionStyle) {
     val context = context
     chipBackgroundColor = ColorStateList.valueOf(ContextCompat.getColor(context, style.backgroundColorRes))
     setTextColor(ContextCompat.getColor(context, style.textColorRes))
-    chipStrokeWidth = 0f
-    chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, android.R.color.transparent))
+    if (style.strokeWidthDp > 0 && style.strokeColorRes != null) {
+        chipStrokeWidth = style.strokeWidthDp.dpToPx(context)
+        chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, style.strokeColorRes))
+    } else {
+        chipStrokeWidth = 0f
+        chipStrokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, android.R.color.transparent))
+    }
     chipIconTint = ColorStateList.valueOf(ContextCompat.getColor(context, style.iconTintRes))
 }
 
@@ -34,8 +59,25 @@ fun MaterialButton.applyActionStyle(style: ActionStyle) {
     val context = context
     backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, style.backgroundColorRes))
     setTextColor(ContextCompat.getColor(context, style.textColorRes))
-    strokeWidth = 0
-    strokeColor = null
+    if (style.strokeWidthDp > 0 && style.strokeColorRes != null) {
+        strokeWidth = style.strokeWidthDp.dpToPxInt(context)
+        strokeColor = ColorStateList.valueOf(ContextCompat.getColor(context, style.strokeColorRes))
+    } else {
+        strokeWidth = 0
+        strokeColor = null
+    }
+}
+
+private fun Int.dpToPx(context: Context): Float {
+    if (this <= 0) return 0f
+    val px = this * context.resources.displayMetrics.density
+    return if (px < 1f) 1f else px
+}
+
+private fun Int.dpToPxInt(context: Context): Int {
+    if (this <= 0) return 0
+    val px = this * context.resources.displayMetrics.density
+    return if (px < 1f) 1 else px.toInt()
 }
 
 fun resolveActionStyle(context: Context, label: CharSequence?): ActionStyle {

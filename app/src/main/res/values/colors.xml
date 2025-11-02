@@ -55,7 +55,7 @@
     <color name="avatarOrange">#FF922B</color>
 
     <color name="action_positive">@color/statusDone</color>
-    <color name="action_destructive">#C92A2A</color>
+    <color name="action_destructive">#8F1D1D</color>
     <color name="action_move">#4263EB</color>
     <color name="action_neutral_background">@color/glass_surface_alt</color>
 
