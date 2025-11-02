@@ -9,82 +9,92 @@
     app:strokeColor="@color/glass_stroke"
     app:strokeWidth="1dp">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/categoryIcon"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_category_icon"
+            android:backgroundTint="@color/categoryCourse"
+            android:contentDescription="@null"
+            android:padding="6dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_school_24"
+            android:tint="@android:color/white"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/deleteButton"
+            style="@style/Widget.Material3.Button.Icon"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:contentDescription="@string/delete_learning_item"
+            android:visibility="gone"
+            app:backgroundTint="@color/action_destructive"
+            app:icon="@drawable/ic_delete_24"
+            app:iconTint="@android:color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/categoryIcon"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/bg_category_icon"
-                android:backgroundTint="@color/categoryCourse"
-                android:contentDescription="@null"
-                android:padding="6dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_school_24"
-                android:tint="@android:color/white" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+            android:textColor="@color/primaryText"
+            app:layout_constraintEnd_toStartOf="@id/deleteButton"
+            app:layout_constraintStart_toEndOf="@id/categoryIcon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_goneMarginEnd="16dp" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:orientation="vertical">
+        <com.google.android.material.chip.Chip
+            android:id="@+id/statusChip"
+            style="@style/Horizon.Chip.Assist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/status_in_progress"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
-                <TextView
-                    android:id="@+id/title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-                    android:textColor="@color/primaryText" />
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+            android:textColor="@color/secondaryText"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/statusChip"
+            app:layout_goneMarginTop="0dp" />
 
-                <TextView
-                    android:id="@+id/subtitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:textAppearance="@style/TextAppearance.Material3.BodySmall"
-                    android:textColor="@color/secondaryText" />
-            </LinearLayout>
-
-            <com.google.android.material.chip.Chip
-                android:id="@+id/statusChip"
-                style="@style/Horizon.Chip.Assist"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:text="@string/status_in_progress"
-                android:visibility="gone" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/deleteButton"
-                style="@style/Widget.Material3.Button.Icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:contentDescription="@string/delete_learning_item"
-                android:visibility="gone"
-                app:backgroundTint="@color/action_destructive"
-                app:icon="@drawable/ic_delete_24"
-                app:iconTint="@android:color/white" />
-        </LinearLayout>
+        <androidx.constraintlayout.widget.Barrier
+            android:id="@+id/textBarrier"
+            app:allowsGoneWidgets="true"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="statusChip,subtitle" />
 
         <com.google.android.material.chip.ChipGroup
             android:id="@+id/actionRow"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:visibility="gone"
             app:chipSpacingHorizontal="8dp"
             app:chipSpacingVertical="8dp"
+            app:layout_constraintEnd_toEndOf="@id/title"
+            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintTop_toBottomOf="@id/textBarrier"
+            app:layout_goneMarginTop="0dp"
             app:singleLine="false"
             app:singleSelection="false">
 
@@ -109,5 +119,6 @@
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
         </com.google.android.material.chip.ChipGroup>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

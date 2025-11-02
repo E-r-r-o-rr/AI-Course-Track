@@ -46,7 +46,7 @@ class DashboardItemAdapter(
             title.text = item.title
             val categoryLabel = holder.itemView.context.getString(item.category.labelRes())
             val sourceText = item.source.takeIf { it.isNotBlank() }
-            subtitle.text = if (sourceText.isNullOrBlank()) {
+            val subtitleText = if (sourceText.isNullOrBlank()) {
                 categoryLabel
             } else {
                 holder.itemView.context.getString(
@@ -55,6 +55,8 @@ class DashboardItemAdapter(
                     sourceText
                 )
             }
+            subtitle.text = subtitleText
+            subtitle.isVisible = subtitleText.isNotBlank()
             categoryIcon.setImageResource(item.category.iconRes())
             val tintColor = ContextCompat.getColor(holder.itemView.context, item.category.tintRes())
             categoryIcon.backgroundTintList = android.content.res.ColorStateList.valueOf(tintColor)
