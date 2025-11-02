@@ -79,6 +79,8 @@
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/textBarrier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:barrierAllowsGoneWidgets="true"
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="statusChip,subtitle" />
