@@ -83,7 +83,7 @@ class DashboardFragment : Fragment() {
                         iconRes = R.drawable.ic_delete_24,
                         contentDescriptionRes = R.string.delete_learning_item,
                         style = ActionStyle.DELETE,
-                        onClick = { viewModel.removeFromQueue(it) }
+                        onClick = { viewModel.deleteItem(it) }
                     )
                 )
             }

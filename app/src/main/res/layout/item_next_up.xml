@@ -93,17 +93,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="12dp"
+            android:layout_marginEnd="24dp"
             android:visibility="gone"
             app:chipSpacingHorizontal="8dp"
             app:chipSpacingVertical="8dp"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_goneMarginEnd="16dp"
+            app:layout_goneMarginEnd="24dp"
             app:layout_constraintStart_toStartOf="@id/title"
             app:layout_constraintTop_toBottomOf="@id/textBarrier"
             app:layout_goneMarginTop="0dp"
-            app:singleLine="true"
             app:singleSelection="false">
 
             <com.google.android.material.chip.Chip

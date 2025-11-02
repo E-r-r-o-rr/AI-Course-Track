@@ -145,6 +145,10 @@ class DashboardViewModel(private val repository: LearningRepository) : ViewModel
     fun completeItem(item: LearningItem) {
         viewModelScope.launch(Dispatchers.IO) { repository.completeItem(item.id) }
     }
+
+    fun deleteItem(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(item) }
+    }
 }
 
 class ThemeViewModel(private val preferences: ThemePreferences) : ViewModel() {
