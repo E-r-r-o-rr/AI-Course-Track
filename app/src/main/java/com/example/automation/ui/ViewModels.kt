@@ -34,16 +34,20 @@ class AppViewModelFactory(private val app: Application) : ViewModelProvider.Fact
 
 class LearningListViewModel(private val repository: LearningRepository) : ViewModel() {
     private val statusFilter = MutableStateFlow<LearningStatus?>(null)
-    private val tagFilter = MutableStateFlow<String?>(null)
+    private val searchQuery = MutableStateFlow("")
 
     private val combined = combine(
         repository.observeItems(),
         statusFilter,
-        tagFilter
-    ) { items, status, tag ->
+        searchQuery
+    ) { items, status, query ->
+        val trimmedQuery = query.trim()
         items.filter { item ->
-            (status == null || item.status == status) &&
-                (tag.isNullOrBlank() || item.tags.any { it.equals(tag, ignoreCase = true) })
+            val matchesStatus = status == null || item.status == status
+            val matchesQuery = trimmedQuery.isBlank() ||
+                item.title.contains(trimmedQuery, ignoreCase = true) ||
+                item.tags.any { it.contains(trimmedQuery, ignoreCase = true) }
+            matchesStatus && matchesQuery
         }
     }
 
@@ -54,8 +58,8 @@ class LearningListViewModel(private val repository: LearningRepository) : ViewMo
         statusFilter.value = status
     }
 
-    fun setTagFilter(tag: String?) {
-        tagFilter.value = tag
+    fun setSearchQuery(query: String?) {
+        searchQuery.value = query?.trim().orEmpty()
     }
 
     fun toggleStatus(item: LearningItem) {
@@ -72,6 +76,12 @@ class LearningListViewModel(private val repository: LearningRepository) : ViewMo
     fun addToQueue(item: LearningItem) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addToQueue(item.id)
+        }
+    }
+
+    fun deleteItem(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteItem(item.id)
         }
     }
 }
@@ -106,7 +116,7 @@ class LearningDetailViewModel(private val repository: LearningRepository) : View
 
     fun deleteItem() {
         val current = item.value ?: return
-        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(current) }
+        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(current.id) }
     }
 }
 
@@ -147,7 +157,7 @@ class DashboardViewModel(private val repository: LearningRepository) : ViewModel
     }
 
     fun deleteItem(item: LearningItem) {
-        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(item) }
+        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(item.id) }
     }
 }
 

@@ -23,6 +23,9 @@ interface LearningItemDao {
     @Delete
     suspend fun delete(item: LearningItem)
 
+    @Query("DELETE FROM learning_items WHERE id = :id")
+    suspend fun deleteById(id: Long)
+
     @Query("SELECT * FROM learning_items WHERE id = :id")
     suspend fun findById(id: Long): LearningItem?
 

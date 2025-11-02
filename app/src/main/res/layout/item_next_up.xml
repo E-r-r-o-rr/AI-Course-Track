@@ -88,22 +88,29 @@
             app:barrierDirection="bottom"
             app:constraint_referenced_ids="statusChip,subtitle" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/actionRow"
+        <LinearLayout
+            android:id="@+id/actionRowContainer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="12dp"
             android:visibility="gone"
-            app:chipSpacingHorizontal="8dp"
-            app:chipSpacingVertical="8dp"
+            android:orientation="horizontal"
+            android:gravity="start"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_goneMarginEnd="24dp"
-            app:layout_constraintStart_toStartOf="@id/title"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textBarrier"
-            app:layout_goneMarginTop="0dp"
-            app:singleSelection="false">
+            app:layout_goneMarginTop="0dp">
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/actionRow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:chipSpacingHorizontal="8dp"
+                app:chipSpacingVertical="8dp"
+                app:singleLine="false"
+                app:singleSelection="false">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/primaryAction"
@@ -125,7 +132,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone" />
-        </com.google.android.material.chip.ChipGroup>
+            </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

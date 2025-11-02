@@ -96,7 +96,9 @@ class DashboardItemAdapter(
             primaryAction.applyAction(item, actions.primary)
             secondaryAction.applyAction(item, actions.secondary)
             tertiaryAction.applyAction(item, actions.tertiary)
-            actionRow.isVisible = listOfNotNull(actions.primary, actions.secondary, actions.tertiary).isNotEmpty()
+            val hasActions = listOfNotNull(actions.primary, actions.secondary, actions.tertiary).isNotEmpty()
+            actionRowContainer.isVisible = hasActions
+            actionRow.isVisible = hasActions
 
             val deleteAction = actions.delete
             deleteButton.isVisible = deleteAction != null

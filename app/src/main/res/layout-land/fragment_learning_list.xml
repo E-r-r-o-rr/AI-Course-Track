@@ -3,55 +3,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:padding="24dp">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         style="@style/Horizon.Toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/librarySubtitle"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/library_subtitle"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-        android:textColor="@color/secondaryText"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/libraryScroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:fillViewport="true"
-        app:layout_constraintTop_toBottomOf="@id/librarySubtitle"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:paddingBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@id/createLearningItem"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="32dp">
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/librarySubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/library_subtitle"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textColor="@color/secondaryText" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/filterCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="20dp">
+                android:layout_marginEnd="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -114,27 +110,24 @@
                         android:layout_marginTop="16dp"
                         android:background="@color/glass_stroke" />
 
-                    <TextView
-                        android:id="@+id/tagHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="@string/filter_by_tag"
-                        android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
-                        android:textColor="@color/primaryText"
-                        android:visibility="gone" />
-
-                    <com.google.android.material.chip.ChipGroup
-                        android:id="@+id/tagGroup"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tagSearchLayout"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:gravity="center_horizontal"
+                        android:layout_marginTop="16dp"
                         android:visibility="gone"
-                        app:chipSpacingHorizontal="12dp"
-                        app:chipSpacingVertical="8dp"
-                        app:singleLine="false"
-                        app:singleSelection="true" />
+                        app:endIconMode="clear_text">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/tagSearchInput"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/search_tags_hint"
+                            android:imeOptions="actionSearch"
+                            android:inputType="text"
+                            android:maxLines="1" />
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -142,6 +135,7 @@
                 android:id="@+id/listCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp">
 
@@ -157,8 +151,8 @@
                         android:nestedScrollingEnabled="false"
                         android:overScrollMode="never"
                         android:paddingStart="12dp"
-                        android:paddingEnd="12dp"
                         android:paddingTop="12dp"
+                        android:paddingEnd="12dp"
                         android:paddingBottom="16dp" />
 
                     <LinearLayout
@@ -171,11 +165,15 @@
                         android:padding="32dp"
                         android:visibility="gone">
 
-                        <ImageView
+                        <ImageButton
+                            android:id="@+id/emptyCreateButton"
                             android:layout_width="72dp"
                             android:layout_height="72dp"
                             android:background="@drawable/gradient_brand"
-                            android:contentDescription="@null"
+                            android:clickable="true"
+                            android:contentDescription="@string/create_learning_item"
+                            android:focusable="true"
+                            android:importantForAccessibility="yes"
                             android:padding="18dp"
                             android:src="@drawable/ic_add_24"
                             android:tint="@android:color/white" />
@@ -193,5 +191,16 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/createLearningItem"
+        style="@style/Horizon.Button.Primary"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="@string/create_learning_item"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

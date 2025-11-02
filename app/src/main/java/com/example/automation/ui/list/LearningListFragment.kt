@@ -2,16 +2,19 @@ package com.example.automation.ui.list
 
 import android.content.Context
 import android.content.res.Configuration
+import android.graphics.Rect
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.automation.R
 import com.example.automation.databinding.FragmentLearningListBinding
 import com.example.automation.model.LearningItem
@@ -20,7 +23,6 @@ import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningListViewModel
 import com.example.automation.ui.ThemeViewModel
 import com.example.automation.ui.theme.updateThemeMenuItem
-import com.google.android.material.chip.Chip
 
 class LearningListFragment : Fragment() {
     private var _binding: FragmentLearningListBinding? = null
@@ -47,10 +49,7 @@ class LearningListFragment : Fragment() {
         binding.toolbar.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_add -> {
-                    findNavController().navigate(
-                        R.id.action_learningListFragment_to_learningEditFragment,
-                        Bundle().apply { putLong("itemId", 0L) }
-                    )
+                    openCreateForm()
                     true
                 }
                 R.id.action_toggle_theme -> {
@@ -69,20 +68,23 @@ class LearningListFragment : Fragment() {
         adapter = LearningListAdapter(
             onItemClick = { openDetail(it) },
             onToggleStatus = { viewModel.toggleStatus(it) },
-            onAddToQueue = { viewModel.addToQueue(it) }
+            onAddToQueue = { viewModel.addToQueue(it) },
+            onDelete = { viewModel.deleteItem(it) }
         )
 
         val spanCount = if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) 2 else 1
         binding.recyclerView.layoutManager = GridLayoutManager(requireContext(), spanCount)
         binding.recyclerView.adapter = adapter
 
-        // ⬇️ Safe-call because createLearningItem is nullable in some layout variants
-        binding.createLearningItem?.setOnClickListener {
-            findNavController().navigate(
-                R.id.action_learningListFragment_to_learningEditFragment,
-                Bundle().apply { putLong("itemId", 0L) }
-            )
+        if (spanCount > 1) {
+            val spacing = resources.getDimensionPixelSize(R.dimen.library_landscape_item_spacing)
+            binding.recyclerView.addItemDecoration(GridSpacingDecoration(spanCount, spacing))
         }
+
+        // ⬇️ Safe-call because createLearningItem is nullable in some layout variants
+        binding.createLearningItem?.setOnClickListener { openCreateForm() }
+
+        binding.emptyCreateButton?.setOnClickListener { openCreateForm() }
 
         // ⬇️ Guard optional views that may not exist in every layout
         binding.statusChips?.setOnCheckedStateChangeListener { _, checkedIds ->
@@ -95,54 +97,35 @@ class LearningListFragment : Fragment() {
             viewModel.setStatusFilter(status)
         }
 
-        binding.tagGroup?.setOnCheckedStateChangeListener { group, checkedIds ->
-            val tag = checkedIds.firstOrNull()?.let { id ->
-                group.findViewById<View>(id)?.tag as? String
+        var hasAnyTags = false
+        var hasVisibleItems = false
+
+        fun updateSearchVisibility() {
+            val searchLayout = binding.tagSearchLayout ?: return
+            val searchInput = binding.tagSearchInput
+            val hasQuery = !searchInput?.text.isNullOrBlank()
+            val shouldShow = hasAnyTags || hasVisibleItems || hasQuery
+            searchLayout.isVisible = shouldShow
+            if (!shouldShow && hasQuery) {
+                searchInput?.setText("")
             }
-            viewModel.setTagFilter(tag)
+        }
+
+        binding.tagSearchInput?.addTextChangedListener { editable ->
+            viewModel.setSearchQuery(editable?.toString())
+            updateSearchVisibility()
         }
 
         viewModel.items.observe(viewLifecycleOwner) { items ->
+            hasVisibleItems = items.isNotEmpty()
             binding.emptyState.isVisible = items.isEmpty()
             adapter.submitList(items)
+            updateSearchVisibility()
         }
 
         viewModel.availableTags.observe(viewLifecycleOwner) { tags ->
-            val tagGroup = binding.tagGroup
-            if (tagGroup == null) {
-                // Layout without tag group — still keep filter state sane.
-                if (tags.isEmpty()) viewModel.setTagFilter(null)
-                return@observe
-            }
-
-            val previousSelection = tagGroup.checkedChipId
-                .takeIf { it != View.NO_ID }
-                ?.let { id -> tagGroup.findViewById<View>(id)?.tag as? String }
-
-            tagGroup.removeAllViews()
-            tags.forEach { tag ->
-                val chipView = layoutInflater.inflate(R.layout.view_filter_chip, tagGroup, false)
-                chipView.tag = tag
-                if (chipView is Chip) {
-                    chipView.id = View.generateViewId()
-                    chipView.text = tag
-                    if (previousSelection != null && tag.equals(previousSelection, ignoreCase = true)) {
-                        chipView.isChecked = true
-                    }
-                }
-                tagGroup.addView(chipView)
-            }
-
-            binding.tagHeader?.isVisible = tags.isNotEmpty()
-            tagGroup.isVisible = tags.isNotEmpty()
-
-            if (previousSelection != null && tags.none { it.equals(previousSelection, ignoreCase = true) }) {
-                viewModel.setTagFilter(null)
-            }
-            if (tags.isEmpty()) {
-                tagGroup.clearCheck()
-                viewModel.setTagFilter(null)
-            }
+            hasAnyTags = tags.isNotEmpty()
+            updateSearchVisibility()
         }
     }
 
@@ -151,10 +134,38 @@ class LearningListFragment : Fragment() {
         super.onDestroyView()
     }
 
+    private fun openCreateForm() {
+        findNavController().navigate(
+            R.id.action_learningListFragment_to_learningEditFragment,
+            Bundle().apply { putLong("itemId", 0L) }
+        )
+    }
+
     private fun openDetail(item: LearningItem) {
         findNavController().navigate(
             R.id.action_learningListFragment_to_learningDetailFragment,
             Bundle().apply { putLong("itemId", item.id) }
         )
+    }
+}
+
+private class GridSpacingDecoration(
+    private val spanCount: Int,
+    private val spacing: Int
+) : RecyclerView.ItemDecoration() {
+    override fun getItemOffsets(
+        outRect: Rect,
+        view: View,
+        parent: RecyclerView,
+        state: RecyclerView.State
+    ) {
+        val position = parent.getChildAdapterPosition(view)
+        if (position == RecyclerView.NO_POSITION) return
+
+        val column = position % spanCount
+
+        outRect.left = spacing * column / spanCount
+        outRect.right = spacing - (column + 1) * spacing / spanCount
+        outRect.bottom = spacing
     }
 }
