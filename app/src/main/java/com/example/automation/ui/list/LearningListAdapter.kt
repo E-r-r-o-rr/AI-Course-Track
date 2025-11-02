@@ -15,10 +15,12 @@ import com.example.automation.model.LearningStatus
 import com.example.automation.ui.category.iconRes
 import com.example.automation.ui.category.labelRes
 import com.example.automation.ui.category.tintRes
+import com.example.automation.ui.common.applyActionStyleByLabel
 
 class LearningListAdapter(
     private val onItemClick: (LearningItem) -> Unit,
-    private val onToggleStatus: (LearningItem) -> Unit
+    private val onToggleStatus: (LearningItem) -> Unit,
+    private val onAddToQueue: (LearningItem) -> Unit
 ) : ListAdapter<LearningItem, LearningListAdapter.ViewHolder>(Diff) {
 
     object Diff : DiffUtil.ItemCallback<LearningItem>() {
@@ -83,6 +85,14 @@ class LearningListAdapter(
                 ContextCompat.getColor(holder.itemView.context, android.R.color.white)
             )
             root.setOnClickListener { onItemClick(item) }
+            addToQueueButton.text = if (item.queued) {
+                holder.itemView.context.getString(R.string.in_queue)
+            } else {
+                holder.itemView.context.getString(R.string.add_to_queue)
+            }
+            addToQueueButton.isEnabled = !item.queued
+            addToQueueButton.setOnClickListener { onAddToQueue(item) }
+            addToQueueButton.applyActionStyleByLabel(addToQueueButton.text)
         }
     }
 }

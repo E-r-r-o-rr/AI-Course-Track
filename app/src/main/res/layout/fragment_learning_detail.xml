@@ -124,14 +124,6 @@
                         android:text="@string/status_done" />
                 </com.google.android.material.button.MaterialButtonToggleGroup>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/openButton"
-                    style="@style/Horizon.Button.Secondary"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:text="@string/open_link" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,6 +154,14 @@
                         android:minHeight="120dp"
                         android:backgroundTint="@android:color/transparent" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/saveChangesButton"
+                    style="@style/Horizon.Button.Primary"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/save_changes" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>

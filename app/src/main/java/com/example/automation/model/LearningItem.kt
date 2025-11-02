@@ -16,6 +16,7 @@ data class LearningItem(
     val category: LearningCategory,
     val tags: List<String>,
     val status: LearningStatus,
+    val queued: Boolean = false,
     val note: String,
     val addedAt: Long,
     val completedAt: Long?
