@@ -97,6 +97,7 @@
             android:visibility="gone"
             app:chipSpacingHorizontal="8dp"
             app:chipSpacingVertical="8dp"
+            app:singleLine="false"
             app:layout_constraintEnd_toStartOf="@id/deleteButton"
             app:layout_constraintHorizontal_bias="0"
             app:layout_goneMarginEnd="24dp"

@@ -106,7 +106,7 @@ class LearningDetailViewModel(private val repository: LearningRepository) : View
 
     fun deleteItem() {
         val current = item.value ?: return
-        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(current) }
+        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(current.id) }
     }
 }
 
@@ -147,7 +147,7 @@ class DashboardViewModel(private val repository: LearningRepository) : ViewModel
     }
 
     fun deleteItem(item: LearningItem) {
-        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(item) }
+        viewModelScope.launch(Dispatchers.IO) { repository.deleteItem(item.id) }
     }
 }
 
