@@ -6,6 +6,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -93,6 +94,30 @@ class DashboardItemAdapter(
             secondaryAction.applyAction(item, actions.secondary)
             tertiaryAction.applyAction(item, actions.tertiary)
             actionRow.isVisible = listOfNotNull(actions.primary, actions.secondary, actions.tertiary).isNotEmpty()
+
+            val deleteAction = actions.delete
+            deleteButton.isVisible = deleteAction != null
+            if (deleteAction != null) {
+                deleteButton.isEnabled = true
+                deleteButton.applyActionStyle(deleteAction.style)
+                val deleteIcon = deleteAction.iconRes?.let { iconRes ->
+                    ResourcesCompat.getDrawable(holder.itemView.resources, iconRes, holder.itemView.context.theme)
+                }
+                if (deleteIcon != null) {
+                    deleteButton.icon = deleteIcon
+                }
+                val deleteContentDescription = deleteAction.contentDescription
+                    ?: deleteAction.contentDescriptionRes?.let { holder.itemView.context.getString(it) }
+                    ?: deleteAction.text?.toString()
+                    ?: deleteAction.textRes?.let { holder.itemView.context.getString(it) }
+                    ?: holder.itemView.context.getString(R.string.delete_learning_item)
+                deleteButton.contentDescription = deleteContentDescription
+                ViewCompat.setTooltipText(deleteButton, deleteContentDescription)
+                deleteButton.setOnClickListener { deleteAction.onClick(item) }
+            } else {
+                deleteButton.isEnabled = false
+                deleteButton.setOnClickListener(null)
+            }
         }
     }
 
@@ -131,7 +156,8 @@ class DashboardItemAdapter(
 data class DashboardItemActions(
     val primary: DashboardItemAction? = null,
     val secondary: DashboardItemAction? = null,
-    val tertiary: DashboardItemAction? = null
+    val tertiary: DashboardItemAction? = null,
+    val delete: DashboardItemAction? = null
 )
 
 data class DashboardItemAction(
