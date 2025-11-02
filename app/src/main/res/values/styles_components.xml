@@ -4,6 +4,15 @@
         <item name="android:elevation">0dp</item>
         <item name="titleTextColor">@color/white</item>
         <item name="subtitleTextColor">@color/glass_highlight</item>
+        <item name="navigationIconTint">@color/white</item>
+        <item name="android:theme">@style/ThemeOverlay.Horizon.Toolbar</item>
+        <item name="popupTheme">@style/ThemeOverlay.Horizon.Toolbar</item>
+    </style>
+
+    <style name="ThemeOverlay.Horizon.Toolbar" parent="ThemeOverlay.Material3.Dark.ActionBar">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/glass_highlight</item>
     </style>
 
     <style name="Horizon.Card" parent="Widget.Material3.CardView.Filled">
@@ -67,5 +76,20 @@
         <item name="chipStrokeColor">@color/glass_chip_stroke</item>
         <item name="chipStrokeWidth">1dp</item>
         <item name="android:textColor">@color/primaryText</item>
+    </style>
+
+    <style name="Horizon.Chip.Action" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/glass_surface_alt</item>
+        <item name="chipSurfaceColor">@color/glass_surface_alt</item>
+        <item name="chipStrokeColor">@color/glass_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">@dimen/radius_md</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.LabelLarge</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="chipStartPadding">16dp</item>
+        <item name="chipEndPadding">16dp</item>
+        <item name="iconStartPadding">8dp</item>
+        <item name="iconEndPadding">8dp</item>
     </style>
 </resources>

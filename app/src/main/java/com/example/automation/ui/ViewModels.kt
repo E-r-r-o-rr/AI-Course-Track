@@ -68,6 +68,12 @@ class LearningListViewModel(private val repository: LearningRepository) : ViewMo
             repository.updateStatus(item.id, nextStatus)
         }
     }
+
+    fun addToQueue(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.addToQueue(item.id)
+        }
+    }
 }
 
 class LearningDetailViewModel(private val repository: LearningRepository) : ViewModel() {
@@ -83,6 +89,14 @@ class LearningDetailViewModel(private val repository: LearningRepository) : View
     fun updateNote(note: String) {
         val id = itemId.value ?: return
         viewModelScope.launch(Dispatchers.IO) { repository.updateNote(id, note) }
+    }
+
+    fun saveChanges(note: String, status: LearningStatus) {
+        val id = itemId.value ?: return
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateNote(id, note)
+            repository.updateStatus(id, status)
+        }
     }
 
     fun updateStatus(status: LearningStatus) {
@@ -112,7 +126,25 @@ class LearningEditViewModel(private val repository: LearningRepository) : ViewMo
 
 class DashboardViewModel(private val repository: LearningRepository) : ViewModel() {
     val summary = repository.observeSummary().asLiveData()
-    val nextUp = repository.observeNextUp().asLiveData()
+    val currentTasks = repository.observeCurrentTasks().asLiveData()
+    val queuedItems = repository.observeQueuedItems().asLiveData()
+    val completedItems = repository.observeCompletedItems().asLiveData()
+
+    fun startItem(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) { repository.startItem(item.id) }
+    }
+
+    fun removeFromQueue(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) { repository.removeFromQueue(item.id) }
+    }
+
+    fun moveToQueue(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) { repository.moveToQueue(item.id) }
+    }
+
+    fun completeItem(item: LearningItem) {
+        viewModelScope.launch(Dispatchers.IO) { repository.completeItem(item.id) }
+    }
 }
 
 class ThemeViewModel(private val preferences: ThemePreferences) : ViewModel() {

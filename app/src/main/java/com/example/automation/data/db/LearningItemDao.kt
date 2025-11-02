@@ -32,7 +32,7 @@ interface LearningItemDao {
     @Query("SELECT COUNT(*) FROM learning_items")
     fun countAll(): Flow<Int>
 
-    @Query("SELECT * FROM learning_items WHERE status != :status ORDER BY addedAt ASC LIMIT 5")
-    fun observeNextUp(status: LearningStatus): Flow<List<LearningItem>>
+    @Query("SELECT * FROM learning_items WHERE status = :status ORDER BY addedAt ASC")
+    fun observeByStatus(status: LearningStatus): Flow<List<LearningItem>>
 
 }
