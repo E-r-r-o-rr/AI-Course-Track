@@ -49,7 +49,7 @@
     <string name="add_to_queue">Add to queue</string>
     <string name="in_queue">In queue</string>
     <string name="start_learning_item">Start</string>
-    <string name="complete_learning_item">Complete task</string>
+    <string name="complete_learning_item">Complete</string>
     <string name="remove_from_current">Do later</string>
     <string name="delete_learning_item">Delete</string>
     <string name="save_changes">Save changes</string>
