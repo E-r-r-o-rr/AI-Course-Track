@@ -23,7 +23,7 @@
         android:clipToPadding="false"
         android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:layout_constraintBottom_toTopOf="@id/openLibrary"
+        app:layout_constraintBottom_toTopOf="@id/dashboardActions"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -250,18 +250,33 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/openLibrary"
-        style="@style/Horizon.Button.Primary"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/dashboardActions"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/go_to_library"
-        app:layout_constraintTop_toBottomOf="@id/dashboardScroll"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/viewLibraryButton"
+            style="@style/Horizon.Button.Primary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="@string/go_to_library" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/createItemButton"
+            style="@style/Horizon.Button.Secondary"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:text="@string/create_item" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
