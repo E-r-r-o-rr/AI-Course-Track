@@ -2,12 +2,12 @@ package com.example.automation.ui.detail
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import android.content.res.ColorStateList
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -22,10 +22,11 @@ import com.example.automation.model.LearningStatus
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.LearningDetailViewModel
 import com.example.automation.ui.ThemeViewModel
-import com.example.automation.ui.theme.updateThemeMenuItem
 import com.example.automation.ui.category.iconRes
 import com.example.automation.ui.category.labelRes
 import com.example.automation.ui.category.tintRes
+import com.example.automation.ui.theme.updateThemeMenuItem
+import com.google.android.material.chip.Chip
 
 class LearningDetailFragment : Fragment() {
     private var _binding: FragmentLearningDetailBinding? = null
@@ -44,7 +45,11 @@ class LearningDetailFragment : Fragment() {
         themeViewModel = ViewModelProvider(requireActivity(), viewModelFactory)[ThemeViewModel::class.java]
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentLearningDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -98,21 +103,21 @@ class LearningDetailFragment : Fragment() {
             }
         }
 
-        binding.openButton.setOnClickListener { handleOpenLink() }
+        binding.openButton?.setOnClickListener { handleOpenLink() }
 
-        binding.saveChangesButton.isEnabled = false
-        binding.saveChangesButton.setOnClickListener {
+        binding.saveChangesButton?.isEnabled = false
+        binding.saveChangesButton?.setOnClickListener {
             val noteToSave = pendingNote
             viewModel.saveChanges(noteToSave)
             originalNote = noteToSave
-            binding.saveChangesButton.isEnabled = false
+            binding.saveChangesButton?.isEnabled = false
             Toast.makeText(requireContext(), R.string.changes_saved, Toast.LENGTH_SHORT).show()
         }
 
         binding.notesEdit.doAfterTextChanged { text ->
             if (isProgrammaticNoteUpdate) return@doAfterTextChanged
             pendingNote = text?.toString().orEmpty()
-            binding.saveChangesButton.isEnabled = pendingNote != originalNote
+            binding.saveChangesButton?.isEnabled = pendingNote != originalNote
         }
 
         viewModel.item.observe(viewLifecycleOwner) { item ->
@@ -141,24 +146,36 @@ class LearningDetailFragment : Fragment() {
                     LearningStatus.DONE -> R.id.buttonDone
                 }
             )
+
             val note = item.note
-            if (binding.notesEdit.text.toString() != note) {
+            val hasPendingNoteChanges = pendingNote != originalNote
+            if (!hasPendingNoteChanges && binding.notesEdit.text.toString() != note) {
                 isProgrammaticNoteUpdate = true
                 binding.notesEdit.setText(note)
                 binding.notesEdit.setSelection(binding.notesEdit.text?.length ?: 0)
                 isProgrammaticNoteUpdate = false
             }
-            originalNote = note
-            pendingNote = note
-            binding.saveChangesButton.isEnabled = false
+
+            if (!hasPendingNoteChanges) {
+                originalNote = note
+                pendingNote = note
+                binding.saveChangesButton?.isEnabled = false
+            } else {
+                binding.saveChangesButton?.isEnabled = pendingNote != originalNote
+            }
+
             binding.tagsGroup.removeAllViews()
             item.tags.forEach { tag ->
-                val chip = layoutInflater.inflate(R.layout.view_tag_chip, binding.tagsGroup, false) as com.google.android.material.chip.Chip
-                chip.text = tag
-                binding.tagsGroup.addView(chip)
+                val chipView = layoutInflater.inflate(
+                    R.layout.view_tag_chip,
+                    binding.tagsGroup,
+                    false
+                ) as Chip
+                chipView.text = tag
+                binding.tagsGroup.addView(chipView)
             }
             binding.tagsGroup.isVisible = item.tags.isNotEmpty()
-            binding.openButton.isEnabled = item.url.isNotBlank()
+            binding.openButton?.isEnabled = item.url.isNotBlank()
         }
     }
 
