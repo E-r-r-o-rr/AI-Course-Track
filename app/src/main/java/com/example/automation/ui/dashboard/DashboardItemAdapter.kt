@@ -17,7 +17,7 @@ import com.example.automation.model.LearningItem
 import com.example.automation.ui.category.iconRes
 import com.example.automation.ui.category.labelRes
 import com.example.automation.ui.category.tintRes
-import com.google.android.material.button.MaterialButton
+import com.google.android.material.chip.Chip
 
 class DashboardItemAdapter(
     private val onClick: (LearningItem) -> Unit,
@@ -72,7 +72,7 @@ class DashboardItemAdapter(
         }
     }
 
-    private fun MaterialButton.applyAction(item: LearningItem, action: DashboardItemAction?) {
+    private fun Chip.applyAction(item: LearningItem, action: DashboardItemAction?) {
         if (action == null) {
             isVisible = false
             setOnClickListener(null)
@@ -83,16 +83,16 @@ class DashboardItemAdapter(
         isEnabled = true
         val resolvedText = action.text ?: action.textRes?.let { context.getString(it) } ?: ""
         text = resolvedText
-        isAllCaps = false
+        isCheckable = false
+        isChipIconVisible = false
         if (action.iconRes != null) {
-            icon = ResourcesCompat.getDrawable(resources, action.iconRes, context.theme)
-            iconGravity = if (resolvedText.isBlank()) {
-                MaterialButton.ICON_GRAVITY_START
-            } else {
-                MaterialButton.ICON_GRAVITY_TEXT_START
-            }
+            chipIcon = ResourcesCompat.getDrawable(resources, action.iconRes, context.theme)
+            chipIconTint = ColorStateList.valueOf(
+                ContextCompat.getColor(context, R.color.primaryText)
+            )
+            isChipIconVisible = true
         } else {
-            icon = null
+            chipIcon = null
         }
         contentDescription = action.contentDescription
             ?: action.contentDescriptionRes?.let { context.getString(it) }

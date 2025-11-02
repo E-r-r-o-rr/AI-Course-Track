@@ -57,33 +57,30 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
+        <com.google.android.material.chip.ChipGroup
             android:id="@+id/actionRow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:gravity="end"
-            android:orientation="horizontal">
+            app:chipSpacingHorizontal="8dp"
+            app:chipSpacingVertical="8dp"
+            app:singleLine="false"
+            app:singleSelection="false">
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
                 android:id="@+id/primaryAction"
-                style="@style/Horizon.Button.Primary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                style="@style/Horizon.Chip.Action"
+                android:visibility="gone" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
                 android:id="@+id/secondaryAction"
-                style="@style/Horizon.Button.Secondary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
+                style="@style/Horizon.Chip.Action"
+                android:visibility="gone" />
 
-            <com.google.android.material.button.MaterialButton
+            <com.google.android.material.chip.Chip
                 android:id="@+id/tertiaryAction"
-                style="@style/Horizon.Button.Secondary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp" />
-        </LinearLayout>
+                style="@style/Horizon.Chip.Action"
+                android:visibility="gone" />
+        </com.google.android.material.chip.ChipGroup>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

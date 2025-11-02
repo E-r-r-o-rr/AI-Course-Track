@@ -68,4 +68,19 @@
         <item name="chipStrokeWidth">1dp</item>
         <item name="android:textColor">@color/primaryText</item>
     </style>
+
+    <style name="Horizon.Chip.Action" parent="Widget.Material3.Chip.Assist">
+        <item name="chipBackgroundColor">@color/glass_surface_alt</item>
+        <item name="chipSurfaceColor">@color/glass_surface_alt</item>
+        <item name="chipStrokeColor">@color/glass_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">@dimen/radius_md</item>
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textAppearance">@style/TextAppearance.Material3.LabelLarge</item>
+        <item name="chipMinHeight">36dp</item>
+        <item name="chipStartPadding">16dp</item>
+        <item name="chipEndPadding">16dp</item>
+        <item name="chipIconStartPadding">8dp</item>
+        <item name="chipIconEndPadding">8dp</item>
+    </style>
 </resources>
