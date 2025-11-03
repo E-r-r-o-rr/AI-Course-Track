@@ -50,7 +50,8 @@ class MainActivityTest {
 
     @Test
     fun viewLibraryShortcutNavigatesFromDashboard() {
-        onView(withId(R.id.viewLibraryButton)).perform(scrollTo(), click())
+        onView(withId(R.id.dashboardScroll)).perform(swipeUp())
+        onView(allOf(withId(R.id.viewLibraryButton), isDisplayed())).perform(click())
 
         onView(withId(R.id.librarySubtitle))
             .check(matches(allOf(isDisplayed(), withText(R.string.library_subtitle))))
