@@ -1,37 +1,22 @@
 package com.example.automation
 
-import android.Manifest
 import android.content.res.Configuration
-import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.addCallback
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
-import com.example.automation.data.work.ReminderWorker
 import com.example.automation.databinding.ActivityMainBinding
 import com.example.automation.ui.AppViewModelFactory
 import com.example.automation.ui.ThemeViewModel
-import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val requestNotificationPermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) {
-                scheduleDailyReminder()
-            }
-        }
     private val themeViewModel: ThemeViewModel by viewModels { AppViewModelFactory(application) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,39 +53,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val granted = ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.POST_NOTIFICATIONS
-            ) == android.content.pm.PackageManager.PERMISSION_GRANTED
-            if (granted) {
-                scheduleDailyReminder()
-            } else {
-                requestNotificationPermission.launch(Manifest.permission.POST_NOTIFICATIONS)
-            }
-        } else {
-            scheduleDailyReminder()
-        }
-    }
-
-    private fun scheduleDailyReminder() {
-        val now = System.currentTimeMillis()
-        val calendar = java.util.Calendar.getInstance().apply {
-            timeInMillis = now
-            set(java.util.Calendar.HOUR_OF_DAY, 9)
-            set(java.util.Calendar.MINUTE, 0)
-            set(java.util.Calendar.SECOND, 0)
-            set(java.util.Calendar.MILLISECOND, 0)
-        }
-        if (calendar.timeInMillis <= now) {
-            calendar.add(java.util.Calendar.DAY_OF_YEAR, 1)
-        }
-        val delay = calendar.timeInMillis - now
-        val work = PeriodicWorkRequestBuilder<ReminderWorker>(1, TimeUnit.DAYS)
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-            .build()
-        WorkManager.getInstance(this)
-            .enqueueUniquePeriodicWork("dailyReminder", ExistingPeriodicWorkPolicy.UPDATE, work)
     }
 
     private fun updateSystemBars(mode: Int) {

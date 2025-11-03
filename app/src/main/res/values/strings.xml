@@ -60,9 +60,6 @@
     <string name="action_toggle_theme">Toggle theme</string>
     <string name="action_enable_dark">Switch to dark mode</string>
     <string name="action_enable_light">Switch to light mode</string>
-    <string name="notification_title">Pick something to learn today</string>
-    <string name="notification_body">Open your learning queue and choose one item to finish.</string>
-    <string name="notification_channel_name">Learning reminders</string>
     <string name="notes_label">Notes</string>
     <string name="category_course">Course</string>
     <string name="category_video">YouTube Video</string>
