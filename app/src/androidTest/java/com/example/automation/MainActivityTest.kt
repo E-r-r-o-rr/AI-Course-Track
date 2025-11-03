@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.action.ViewActions.scrollTo
+import androidx.test.espresso.action.ViewActions.swipeUp
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -68,7 +69,8 @@ class MainActivityTest {
     fun tappingCreateButtonInLibraryOpensCreateScreen() {
         onView(allOf(withId(R.id.learningListFragment), isDisplayed())).perform(click())
 
-        onView(withId(R.id.createLearningItem)).perform(scrollTo(), click())
+        onView(withId(R.id.libraryScroll)).perform(swipeUp())
+        onView(allOf(withId(R.id.createLearningItem), isDisplayed())).perform(click())
 
         onView(withText(R.string.create_title))
             .check(matches(isDisplayed()))
