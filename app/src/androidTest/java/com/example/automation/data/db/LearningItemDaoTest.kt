@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
+import org.hamcrest.CoreMatchers.nullValue
 import org.hamcrest.MatcherAssert.assertThat
 import org.junit.After
 import org.junit.Before
@@ -69,7 +70,7 @@ class LearningItemDaoTest {
         dao.delete(stored)
 
         val deleted = dao.findById(insertedId)
-        assertThat(deleted, `is`(null))
+        assertThat(deleted, `is`(nullValue()))
     }
 
     @Test
